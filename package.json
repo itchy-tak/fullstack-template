@@ -1,0 +1,32 @@
+{
+  "name": "fullstack-template",
+  "private": true,
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.5.3",
+    "turbo": "^2.5.4",
+    "typescript": "^5.9.0"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "init-project": "node scripts/init-project.mjs",
+    "create-package": "node scripts/create-package.mjs",
+    "init-husky": "husky",
+    "cp:env": "turbo run cp:env",
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "build:apps": "turbo run build --filter=\"./apps/*\"",
+    "build:packages": "turbo run build --filter=\"./packages/*\"",
+    "start": "turbo run start",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "generate": "turbo run generate",
+    "preclean": "rm -rf .pnpm-store",
+    "clean": "turbo run clean",
+    "postclean": "rm -rf .turbo node_modules"
+  }
+}

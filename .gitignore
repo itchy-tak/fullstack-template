@@ -1,0 +1,30 @@
+# dependencies
+node_modules
+.pnpm-store
+
+# build / output
+.next
+next-env.d.ts
+/out/
+dist
+build
+
+# tooling
+.turbo
+.vercel
+*.tsbuildinfo
+
+# environment
+.env*
+!.env.example
+
+# logs
+*.log
+
+# misc
+.DS_Store
+*.pem
+
+# tmp
+.local/*
+!.local/.gitkeep

@@ -1,0 +1,24 @@
+{
+  "name": "@takuya-ichikawa/eslint-config-base",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./index.mjs",
+  "types": "./index.d.ts",
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": "https://github.com/takuya-ichikawa/fullstack-template",
+  "dependencies": {
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "typescript-eslint": "^8.56.1"
+  },
+  "peerDependencies": {
+    "eslint": "^9.0.0"
+  },
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules"
+  }
+}

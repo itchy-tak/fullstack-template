@@ -1,0 +1,43 @@
+{
+  "$schema": "./node_modules/turbo/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {},
+    "lint:fix": {
+      "outputs": []
+    },
+    "cp:env": {
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    },
+    "typecheck": {
+      "dependsOn": ["^build"]
+    },
+    "test": {
+      "cache": false
+    },
+    "generate": {},
+    "backend#generate": {
+      "inputs": ["prisma/schema.prisma", "src/**/*.ts"],
+      "outputs": []
+    },
+    "@takuya-ichikawa/api-types#generate": {
+      "dependsOn": ["backend#generate"],
+      "inputs": ["src/__generated__/openapi.json"],
+      "outputs": ["src/__generated__/generated.ts", "src/__generated__/operation-map.ts"]
+    }
+  }
+}
