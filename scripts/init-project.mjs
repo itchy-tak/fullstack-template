@@ -23,7 +23,7 @@ function getRepoName() {
 async function replaceInFile(filePath, repoName) {
   try {
     const content = await fs.readFile(filePath, 'utf8');
-    const updated = content.replace(/fullstack-template/g, repoName);
+    const updated = content.replace(/frontendtemplate/g, repoName);
     if (content !== updated) {
       await fs.writeFile(filePath, updated, 'utf8');
       console.log(`Replaced occurrences in ${filePath}`);

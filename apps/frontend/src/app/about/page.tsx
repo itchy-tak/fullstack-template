@@ -26,12 +26,6 @@ export default function AboutPage(): ReactNode {
           </List.Item>
           <List.Item>
             <Text as="span" fontWeight="bold">
-              Backend:
-            </Text>{' '}
-            NestJS 11 / Prisma 6
-          </List.Item>
-          <List.Item>
-            <Text as="span" fontWeight="bold">
               Monorepo:
             </Text>{' '}
             Turborepo / pnpm workspaces
@@ -61,18 +55,6 @@ export default function AboutPage(): ReactNode {
               apps/frontend
             </Text>{' '}
             — Next.js アプリケーション
-          </List.Item>
-          <List.Item>
-            <Text as="span" fontWeight="bold">
-              apps/backend
-            </Text>{' '}
-            — NestJS API サーバー
-          </List.Item>
-          <List.Item>
-            <Text as="span" fontWeight="bold">
-              packages/api-types
-            </Text>{' '}
-            — 共有型定義
           </List.Item>
         </List.Root>
       </Box>

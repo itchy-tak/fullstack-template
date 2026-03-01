@@ -1,5 +1,5 @@
 {
-  "name": "fullstack-template",
+  "name": "frontendtemplate",
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev",
   "mounts": [
@@ -19,8 +19,6 @@
         "Gruntfuggly.todo-tree",
         "Postman.postman-for-vscode",
         "yoavbls.pretty-ts-errors",
-        "mtxr.sqltools-driver-pg",
-        "Prisma.prisma",
         "rodrigovallades.es7-react-js-snippets",
         "formulahendry.auto-rename-tag"
       ],
@@ -39,32 +37,13 @@
           "source.fixAll.eslint": "always",
           "source.addMissingImports.ts": "always"
         },
-        // --- Language-specific formatters ---
-        "[prisma]": {
-          "editor.defaultFormatter": "Prisma.prisma"
-        },
         // --- Files ---
         "files.eol": "\n",
         // --- ESLint (monorepo: resolve config per package) ---
         "eslint.enable": true,
         "eslint.workingDirectories": [{ "pattern": "./apps/*/" }, { "pattern": "./packages/*/" }],
         // --- TypeScript (use workspace TypeScript instead of VS Code built-in) ---
-        "typescript.tsdk": "node_modules/typescript/lib",
-        // --- Prisma ---
-        "prisma.pinToPrisma6": true,
-        // --- SQLTools ---
-        "sqltools.connections": [
-          {
-            "previewLimit": 50,
-            "server": "db",
-            "port": 5432,
-            "driver": "PostgreSQL",
-            "name": "fullstack-template-connection",
-            "database": "postgres",
-            "username": "postgres",
-            "password": "postgres"
-          }
-        ]
+        "typescript.tsdk": "node_modules/typescript/lib"
       }
     }
   },

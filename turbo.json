@@ -29,15 +29,6 @@
     "test": {
       "cache": false
     },
-    "generate": {},
-    "backend#generate": {
-      "inputs": ["prisma/schema.prisma", "src/**/*.ts"],
-      "outputs": []
-    },
-    "@takuya-ichikawa/api-types#generate": {
-      "dependsOn": ["backend#generate"],
-      "inputs": ["src/__generated__/openapi.json"],
-      "outputs": ["src/__generated__/generated.ts", "src/__generated__/operation-map.ts"]
-    }
+    "generate": {}
   }
 }

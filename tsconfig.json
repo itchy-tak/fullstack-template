@@ -2,16 +2,10 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/backend"
-    },
-    {
       "path": "./apps/frontend"
     },
     {
       "path": "./packages/package-template"
-    },
-    {
-      "path": "./packages/api-types"
     }
   ]
 }

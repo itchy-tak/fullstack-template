@@ -6,10 +6,10 @@ export default function Home(): ReactNode {
     <Container maxW="800px" py={10}>
       <Box textAlign="center" mb={10}>
         <Heading as="h1" size="3xl" mb={4}>
-          Fullstack Template
+          Frontend Template
         </Heading>
         <Text color="gray.500" fontSize="lg">
-          Next.js + NestJS + Prisma モノレポテンプレート
+          Next.js
         </Text>
       </Box>
 
@@ -18,18 +18,6 @@ export default function Home(): ReactNode {
           ページ
         </Heading>
         <List.Root gap={2} pl={4}>
-          <List.Item>
-            <Link href="/users" color="blue.500" fontWeight="medium">
-              /users
-            </Link>{' '}
-            — ユーザー CRUD（一覧・作成・更新・削除・ID 検索）
-          </List.Item>
-          <List.Item>
-            <Link href="/posts" color="blue.500" fontWeight="medium">
-              /posts
-            </Link>{' '}
-            — 投稿 CRUD（一覧・作成・更新・削除・ID 検索）
-          </List.Item>
           <List.Item>
             <Link href="/about" color="blue.500" fontWeight="medium">
               /about
@@ -43,10 +31,6 @@ export default function Home(): ReactNode {
         <Heading as="h2" size="lg" mb={3}>
           API Routes
         </Heading>
-        <Text color="gray.500" mb={2}>
-          /api/:path* は rewrites でバックエンドへプロキシされます。 Route Handler
-          があるパスはそちらが優先されます。
-        </Text>
         <List.Root gap={2} pl={4}>
           <List.Item>
             <Text as="span" fontWeight="bold">
