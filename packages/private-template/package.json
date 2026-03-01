@@ -1,0 +1,25 @@
+{
+  "name": "private-template",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .turbo dist node_modules tsconfig.tsbuildinfo",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "@takuya-ichikawa/eslint-config-base": "workspace:*",
+    "@takuya-ichikawa/typescript-config": "workspace:*",
+    "eslint": "^9.0.0"
+  }
+}

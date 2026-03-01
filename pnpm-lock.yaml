@@ -114,7 +114,7 @@ importers:
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.71.2(react@19.2.4))
-      'api-types':
+      api-types:
         specifier: workspace:*
         version: link:../../packages/api-types
       class-variance-authority:
@@ -251,7 +251,19 @@ importers:
         specifier: ^8.56.1
         version: 8.56.1(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3)
 
-  packages/package-template:
+  packages/private-template:
+    devDependencies:
+      '@takuya-ichikawa/eslint-config-base':
+        specifier: workspace:*
+        version: link:../eslint-config-base
+      '@takuya-ichikawa/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      eslint:
+        specifier: ^9.0.0
+        version: 9.39.3(jiti@2.6.1)
+
+  packages/public-template:
     devDependencies:
       '@takuya-ichikawa/eslint-config-base':
         specifier: workspace:*
