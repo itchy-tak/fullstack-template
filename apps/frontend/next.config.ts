@@ -5,7 +5,7 @@ const BACKEND_URL = process.env.BACKEND_URL ?? 'http://localhost:5000';
 export default {
   reactStrictMode: true,
   experimental: {
-    optimizePackageImports: ['@chakra-ui/react'],
+    optimizePackageImports: ['lucide-react'],
   },
   typescript: {
     ignoreBuildErrors: false,

@@ -1,81 +1,68 @@
-import { Box, Container, Heading, List, Text } from '@chakra-ui/react';
 import { ReactNode } from 'react';
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Heading } from '@/components/ui/heading';
+import { List, ListItem } from '@/components/ui/list';
+import { Paragraph } from '@/components/ui/paragraph';
+import { Separator } from '@/components/ui/separator';
 
 export default function AboutPage(): ReactNode {
   return (
-    <Container maxW="800px" py={10}>
-      <Heading as="h1" size="2xl" mb={6}>
+    <div className="mx-auto max-w-[800px] px-4 py-10">
+      <Heading as="h1" className="mb-6 text-3xl">
         About this Template
       </Heading>
 
-      <Text mb={4}>
+      <Paragraph className="mb-6">
         このプロジェクトは、モダンなフルスタック開発のためのモノレポテンプレートです。
         以下の技術スタックで構成されています。
-      </Text>
+      </Paragraph>
 
-      <Box mb={6}>
-        <Heading as="h2" size="lg" mb={3}>
-          技術スタック
-        </Heading>
-        <List.Root gap={2} pl={4}>
-          <List.Item>
-            <Text as="span" fontWeight="bold">
-              Frontend:
-            </Text>{' '}
-            Next.js 16 / React 19 / Chakra UI
-          </List.Item>
-          <List.Item>
-            <Text as="span" fontWeight="bold">
-              Backend:
-            </Text>{' '}
-            NestJS 11 / Prisma 6
-          </List.Item>
-          <List.Item>
-            <Text as="span" fontWeight="bold">
-              Monorepo:
-            </Text>{' '}
-            Turborepo / pnpm workspaces
-          </List.Item>
-          <List.Item>
-            <Text as="span" fontWeight="bold">
-              Linting:
-            </Text>{' '}
-            ESLint 9 (flat config) / Prettier
-          </List.Item>
-          <List.Item>
-            <Text as="span" fontWeight="bold">
-              Language:
-            </Text>{' '}
-            TypeScript 5.9
-          </List.Item>
-        </List.Root>
-      </Box>
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>技術スタック</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <List>
+            <ListItem>
+              <span className="font-bold">Frontend:</span> Next.js 16 / React 19 / shadcn/ui
+            </ListItem>
+            <ListItem>
+              <span className="font-bold">Backend:</span> NestJS 11 / Prisma 6
+            </ListItem>
+            <ListItem>
+              <span className="font-bold">Monorepo:</span> Turborepo / pnpm workspaces
+            </ListItem>
+            <ListItem>
+              <span className="font-bold">Linting:</span> ESLint 9 (flat config) / Prettier
+            </ListItem>
+            <ListItem>
+              <span className="font-bold">Language:</span> TypeScript 5.9
+            </ListItem>
+          </List>
+        </CardContent>
+      </Card>
 
-      <Box mb={6}>
-        <Heading as="h2" size="lg" mb={3}>
-          プロジェクト構成
-        </Heading>
-        <List.Root gap={2} pl={4}>
-          <List.Item>
-            <Text as="span" fontWeight="bold">
-              apps/frontend
-            </Text>{' '}
-            — Next.js アプリケーション
-          </List.Item>
-          <List.Item>
-            <Text as="span" fontWeight="bold">
-              apps/backend
-            </Text>{' '}
-            — NestJS API サーバー
-          </List.Item>
-          <List.Item>
-            <Text as="span" fontWeight="bold">
-              packages/api-types
-            </Text>{' '}
-            — 共有型定義
-          </List.Item>
-        </List.Root>
-      </Box>
-    </Container>
+      <Separator className="my-6" />
+
+      <Card>
+        <CardHeader>
+          <CardTitle>プロジェクト構成</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <List>
+            <ListItem>
+              <span className="font-bold">apps/frontend</span> — Next.js アプリケーション
+            </ListItem>
+            <ListItem>
+              <span className="font-bold">apps/backend</span> — NestJS API サーバー
+            </ListItem>
+            <ListItem>
+              <span className="font-bold">packages/api-types</span> — 共有型定義
+            </ListItem>
+          </List>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -48,6 +48,8 @@
         // --- ESLint (monorepo: resolve config per package) ---
         "eslint.enable": true,
         "eslint.workingDirectories": [{ "pattern": "./apps/*/" }, { "pattern": "./packages/*/" }],
+        // allow Tailwind/custom at-rules in CSS
+        "css.lint.unknownAtRules": "ignore",
         // --- TypeScript (use workspace TypeScript instead of VS Code built-in) ---
         "typescript.tsdk": "node_modules/typescript/lib",
         // --- Prisma ---

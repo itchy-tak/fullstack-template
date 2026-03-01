@@ -1,9 +1,12 @@
 'use client';
 
-import { Box, Button, Heading, HStack, Input, Text } from '@chakra-ui/react';
 import type { OperationResponse } from '@takuya-ichikawa/api-types';
 import { ReactNode, useState } from 'react';
 
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Paragraph } from '@/components/ui/paragraph';
 import { apiClient, type ApiClientParams } from '@/lib/api-client';
 
 type UserDetail = OperationResponse<'UsersController_findOne'>;
@@ -31,30 +34,38 @@ export function SearchUserForm(): ReactNode {
   };
 
   return (
-    <Box mb={8} p={5} borderWidth="1px" borderRadius="lg">
-      <Heading as="h2" size="md" mb={3}>
-        Get User by ID
-      </Heading>
-      <HStack gap={2} mb={2}>
-        <Input
-          placeholder="id"
-          value={searchId}
-          onChange={(e) => {
-            setSearchId(e.target.value);
-          }}
-          maxW="120px"
-        />
-        <Button onClick={() => void handleSearch()}>GET</Button>
-      </HStack>
-      {searchError !== null && <Text color="red.500">{searchError}</Text>}
-      {foundUser !== null && (
-        <Box p={3} bg="gray.50" borderRadius="md" mt={2}>
-          <Text>
-            #{foundUser.id} — {foundUser.email}
-            {foundUser.name !== null ? ` (${foundUser.name})` : ''}
-          </Text>
-        </Box>
-      )}
-    </Box>
+    <Card className="mb-8">
+      <CardHeader>
+        <CardTitle>Get User by ID</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="mb-2 flex items-center gap-2">
+          <Input
+            placeholder="id"
+            value={searchId}
+            onChange={(e) => {
+              setSearchId(e.target.value);
+            }}
+            className="max-w-[120px]"
+          />
+          <Button onClick={() => void handleSearch()}>GET</Button>
+        </div>
+        {searchError !== null && <Paragraph variant="destructive">{searchError}</Paragraph>}
+        {foundUser !== null && (
+          <Card className="mt-2">
+            <CardHeader>
+              <CardTitle>
+                #{foundUser.id} — {foundUser.email}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Paragraph variant="muted">
+                {foundUser.name !== null ? foundUser.name : '(名前未設定)'}
+              </Paragraph>
+            </CardContent>
+          </Card>
+        )}
+      </CardContent>
+    </Card>
   );
 }

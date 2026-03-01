@@ -1,10 +1,19 @@
 'use client';
 
-import { Box, Button, Heading, HStack, Input, Stack, Text, VStack } from '@chakra-ui/react';
 import type { OperationResponse, Post } from '@takuya-ichikawa/api-types';
 import { useRouter } from 'next/navigation';
 import { ReactNode, useCallback, useState } from 'react';
 
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Heading } from '@/components/ui/heading';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Paragraph } from '@/components/ui/paragraph';
+import { Separator } from '@/components/ui/separator';
 import { apiClient, type ApiClientParams } from '@/lib/api-client';
 
 import { CreatePostForm } from './CreatePostForm';
@@ -86,119 +95,120 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
   return (
     <>
       {error !== null && (
-        <Box mb={4} p={3} bg="red.50" borderRadius="md">
-          <Text color="red.600">{error}</Text>
-        </Box>
+        <Alert variant="destructive" className="mb-4">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       )}
 
       <CreatePostForm onCreated={() => void refreshPosts()} onError={setError} />
 
       <SearchPostForm />
 
+      <Separator className="my-6" />
+
       {/* --- List --- */}
-      <Heading as="h2" size="md" mb={3}>
+      <Heading as="h2" className="mb-3 text-base">
         All Posts
       </Heading>
       {posts.length === 0 ? (
-        <Text color="gray.500">まだ投稿がありません。上のフォームから作成してください。</Text>
+        <Paragraph variant="muted">
+          まだ投稿がありません。上のフォームから作成してください。
+        </Paragraph>
       ) : (
-        <Stack gap={3}>
+        <div className="space-y-3">
           {posts.map((post) => (
-            <Box key={post.id} p={4} borderWidth="1px" borderRadius="lg">
-              {editingId === post.id ? (
-                <VStack align="stretch" gap={2}>
-                  <Input
-                    placeholder="title"
-                    value={editTitle}
-                    onChange={(e) => {
-                      setEditTitle(e.target.value);
-                    }}
-                  />
-                  <Input
-                    placeholder="content"
-                    value={editContent}
-                    onChange={(e) => {
-                      setEditContent(e.target.value);
-                    }}
-                  />
-                  <HStack gap={2}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={editPublished}
-                        onChange={(e) => {
-                          setEditPublished(e.target.checked);
+            <Card key={post.id}>
+              <CardContent>
+                {editingId === post.id ? (
+                  <div className="flex flex-col gap-2">
+                    <Input
+                      placeholder="title"
+                      value={editTitle}
+                      onChange={(e) => {
+                        setEditTitle(e.target.value);
+                      }}
+                    />
+                    <Input
+                      placeholder="content"
+                      value={editContent}
+                      onChange={(e) => {
+                        setEditContent(e.target.value);
+                      }}
+                    />
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2">
+                        <Checkbox
+                          id={`published-${String(post.id)}`}
+                          checked={editPublished}
+                          onCheckedChange={(checked) => {
+                            setEditPublished(checked === true);
+                          }}
+                        />
+                        <Label htmlFor={`published-${String(post.id)}`}>Published</Label>
+                      </div>
+                      <Button size="sm" onClick={() => void handleUpdate(post.id)}>
+                        PATCH
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          setEditingId(null);
                         }}
-                      />{' '}
-                      Published
-                    </label>
-                    <Button
-                      size="sm"
-                      colorPalette="green"
-                      onClick={() => void handleUpdate(post.id)}
-                    >
-                      PATCH
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => {
-                        setEditingId(null);
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                  </HStack>
-                </VStack>
-              ) : (
-                <HStack justifyContent="space-between">
-                  <Box>
-                    <Text fontWeight="bold">
-                      #{post.id} — {post.title}
-                    </Text>
-                    {post.content !== null && (
-                      <Text color="gray.600" fontSize="sm">
-                        {post.content}
-                      </Text>
-                    )}
-                    <Text fontSize="xs" color="gray.400">
-                      {post.published ? '公開' : '下書き'}
-                      {post.authorId !== null ? ` · Author ID: ${String(post.authorId)}` : ''}
-                    </Text>
-                  </Box>
-                  <HStack gap={1}>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => {
-                        startEditing(post);
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      size="sm"
-                      colorPalette="red"
-                      variant="outline"
-                      onClick={() => {
-                        void handleDelete(post.id);
-                      }}
-                    >
-                      DELETE
-                    </Button>
-                  </HStack>
-                </HStack>
-              )}
-            </Box>
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-1">
+                      <CardTitle>
+                        #{post.id} — {post.title}
+                      </CardTitle>
+                      {post.content !== null && <Paragraph variant="sm">{post.content}</Paragraph>}
+                      <div className="flex items-center gap-2">
+                        <Badge variant={post.published ? 'default' : 'secondary'}>
+                          {post.published ? '公開' : '下書き'}
+                        </Badge>
+                        {post.authorId !== null && (
+                          <Paragraph variant="sm">Author ID: {String(post.authorId)}</Paragraph>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          startEditing(post);
+                        }}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => {
+                          void handleDelete(post.id);
+                        }}
+                      >
+                        DELETE
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           ))}
-        </Stack>
+        </div>
       )}
 
-      <Box mt={6}>
+      <div className="mt-6">
         <Button variant="outline" onClick={() => void refreshPosts()}>
           Refresh
         </Button>
-      </Box>
+      </div>
     </>
   );
 }

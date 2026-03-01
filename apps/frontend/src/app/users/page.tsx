@@ -1,6 +1,9 @@
-import { Container, Heading, Text } from '@chakra-ui/react';
 import type { OperationResponse } from '@takuya-ichikawa/api-types';
 import { ReactNode } from 'react';
+
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Heading } from '@/components/ui/heading';
+import { Paragraph } from '@/components/ui/paragraph';
 
 import { UserListPanel } from './_components';
 
@@ -28,21 +31,23 @@ export default async function UsersPage(): Promise<ReactNode> {
   }
 
   return (
-    <Container maxW="800px" py={10}>
-      <Heading as="h1" size="2xl" mb={2}>
+    <div className="mx-auto max-w-[800px] px-4 py-10">
+      <Heading as="h1" className="mb-2 text-3xl">
         Users
       </Heading>
-      <Text color="gray.500" mb={6} fontSize="sm">
+      <Paragraph variant="sm" className="mb-6">
         SSR — サーバーサイドでデータ取得 / CSR コンポーネントで CRUD 操作
-      </Text>
+      </Paragraph>
 
       {fetchError !== null && (
-        <Text color="red.500" mb={4}>
-          サーバーサイドでのデータ取得に失敗しました: {fetchError}
-        </Text>
+        <Alert variant="destructive" className="mb-4">
+          <AlertDescription>
+            サーバーサイドでのデータ取得に失敗しました: {fetchError}
+          </AlertDescription>
+        </Alert>
       )}
 
       <UserListPanel initialUsers={initialUsers} />
-    </Container>
+    </div>
   );
 }

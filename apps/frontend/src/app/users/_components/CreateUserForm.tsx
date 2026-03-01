@@ -1,8 +1,10 @@
 'use client';
 
-import { Box, Button, Heading, HStack, Input } from '@chakra-ui/react';
 import { ReactNode, useState } from 'react';
 
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { apiClient, type ApiClientParams } from '@/lib/api-client';
 
 interface CreateUserFormProps {
@@ -32,29 +34,31 @@ export function CreateUserForm({ onCreated, onError }: CreateUserFormProps): Rea
   };
 
   return (
-    <Box mb={8} p={5} borderWidth="1px" borderRadius="lg">
-      <Heading as="h2" size="md" mb={3}>
-        Create User
-      </Heading>
-      <HStack gap={2}>
-        <Input
-          placeholder="email (required)"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <Input
-          placeholder="name (optional)"
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
-        <Button colorPalette="blue" onClick={() => void handleCreate()} flexShrink={0}>
-          POST
-        </Button>
-      </HStack>
-    </Box>
+    <Card className="mb-8">
+      <CardHeader>
+        <CardTitle>Create User</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="flex items-center gap-2">
+          <Input
+            placeholder="email (required)"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <Input
+            placeholder="name (optional)"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+          <Button onClick={() => void handleCreate()} className="shrink-0">
+            POST
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
