@@ -2,9 +2,9 @@
   "name": "fullstack-template",
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev",
-  "mounts": [
-    "source=${localEnv:HOME}/.npmrc,target=/home/node/.npmrc,type=bind,consistency=cached"
-  ],
+  "remoteEnv": {
+    "NPM_TOKEN": "${localEnv:NPM_TOKEN}"
+  },
   "workspaceFolder": "/workspace",
   "customizations": {
     "vscode": {
