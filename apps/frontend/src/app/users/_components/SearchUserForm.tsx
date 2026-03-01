@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Paragraph } from '@/components/ui/paragraph';
-import { apiClient, type ApiClientParams } from '@/lib/api-client';
+import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
 type UserDetail = OperationResponse<'UsersController_findOne'>;
 

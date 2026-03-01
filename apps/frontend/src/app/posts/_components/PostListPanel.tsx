@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Paragraph } from '@/components/ui/paragraph';
 import { Separator } from '@/components/ui/separator';
-import { apiClient, type ApiClientParams } from '@/lib/api-client';
+import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
 import { CreatePostForm } from './CreatePostForm';
 import { SearchPostForm } from './SearchPostForm';

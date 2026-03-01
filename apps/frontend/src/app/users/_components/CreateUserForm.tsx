@@ -5,7 +5,7 @@ import { ReactNode, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { apiClient, type ApiClientParams } from '@/lib/api-client';
+import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
 interface CreateUserFormProps {
   onCreated: () => void;

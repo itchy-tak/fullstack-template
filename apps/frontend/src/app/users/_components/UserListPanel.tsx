@@ -11,7 +11,7 @@ import { Heading } from '@/components/ui/heading';
 import { Input } from '@/components/ui/input';
 import { Paragraph } from '@/components/ui/paragraph';
 import { Separator } from '@/components/ui/separator';
-import { apiClient, type ApiClientParams } from '@/lib/api-client';
+import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
 import { CreateUserForm } from './CreateUserForm';
 import { SearchUserForm } from './SearchUserForm';

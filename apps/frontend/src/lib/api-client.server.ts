@@ -1,8 +1,11 @@
+'use server';
+
 /**
- * Operation 名ベースの型安全 API クライアント。
+ * Operation 名ベースの型安全 API クライアント（Server Action）。
  *
  * 内部で openapi-fetch を使用し、OPERATION_MAP から path/method を自動解決する。
- * baseUrl は Next.js の Route Handler プロキシ (/api) を経由するデフォルト設定。
+ * `'use server'` により、クライアントコンポーネントから直接呼び出せる Server Action として動作する。
+ * BACKEND_URL には直接アクセスするためサーバーサイドでのみ動作する。
  *
  * @example
  * ```ts
@@ -29,12 +32,15 @@ import type {
   paths,
 } from 'api-types';
 import { OPERATION_MAP } from 'api-types';
+import { unstable_noStore as noStore } from 'next/cache';
 import createClient from 'openapi-fetch';
+
+const BACKEND_URL = process.env.BACKEND_URL ?? 'http://localhost:5000';
 
 // ---------------------------------------------------------------------------
 // openapi-fetch client (internal)
 // ---------------------------------------------------------------------------
-const client = createClient<paths>({ baseUrl: '/api' });
+const client = createClient<paths>({ baseUrl: BACKEND_URL });
 
 // ---------------------------------------------------------------------------
 // Params type — path / body の有無に応じて必要なプロパティだけ要求する
@@ -63,6 +69,7 @@ export async function apiClient<O extends Operation>(
     ? [params?: ApiClientParams<O>]
     : [params: ApiClientParams<O>]
 ): Promise<OperationResponse<O>> {
+  noStore();
   const rawParams = args[0];
   const { path: routePath, method } = OPERATION_MAP[operation];
 

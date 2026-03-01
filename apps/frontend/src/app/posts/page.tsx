@@ -4,10 +4,9 @@ import { ReactNode } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Heading } from '@/components/ui/heading';
 import { Paragraph } from '@/components/ui/paragraph';
+import { apiClient } from '@/lib/api-client.server';
 
 import { PostListPanel } from './_components';
-
-const BACKEND_URL = process.env.BACKEND_URL ?? 'http://localhost:5000';
 
 type Posts = OperationResponse<'PostsController_findAll'>;
 
@@ -21,11 +20,7 @@ export default async function PostsPage(): Promise<ReactNode> {
   let fetchError: string | null = null;
 
   try {
-    const res = await fetch(`${BACKEND_URL}/posts`, { cache: 'no-store' });
-    if (!res.ok) {
-      throw new Error(`${String(res.status)} ${res.statusText}`);
-    }
-    initialPosts = (await res.json()) as Posts;
+    initialPosts = await apiClient('PostsController_findAll');
   } catch (e) {
     fetchError = e instanceof Error ? e.message : 'Failed to fetch posts';
   }

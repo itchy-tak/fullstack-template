@@ -46,10 +46,6 @@ export default function Home(): ReactNode {
       <Card>
         <CardHeader>
           <CardTitle>API Routes</CardTitle>
-          <CardDescription>
-            /api/:path* は rewrites でバックエンドへプロキシされます。 Route Handler
-            があるパスはそちらが優先されます。
-          </CardDescription>
         </CardHeader>
         <CardContent>
           <List>
