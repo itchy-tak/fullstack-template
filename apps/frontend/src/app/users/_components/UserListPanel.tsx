@@ -1,6 +1,6 @@
 'use client';
 
-import type { OperationResponse, User } from 'api-types';
+import type { OperationResponse } from 'api-types';
 import { useRouter } from 'next/navigation';
 import { ReactNode, useCallback, useState } from 'react';
 
@@ -16,15 +16,15 @@ import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 import { CreateUserForm } from './CreateUserForm';
 import { SearchUserForm } from './SearchUserForm';
 
-type Users = OperationResponse<'UsersController_findAll'>;
+type User = OperationResponse<'UsersController_findAll'>[number];
 
 interface UserListPanelProps {
-  initialUsers: Users;
+  initialUsers: User[];
 }
 
 export function UserListPanel({ initialUsers }: UserListPanelProps): ReactNode {
   const router = useRouter();
-  const [users, setUsers] = useState<Users>(initialUsers);
+  const [users, setUsers] = useState<User[]>(initialUsers);
   const [error, setError] = useState<string | null>(null);
 
   // --- Update form ---

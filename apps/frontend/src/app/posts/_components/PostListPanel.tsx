@@ -1,6 +1,6 @@
 'use client';
 
-import type { OperationResponse, Post } from 'api-types';
+import type { OperationResponse } from 'api-types';
 import { useRouter } from 'next/navigation';
 import { ReactNode, useCallback, useState } from 'react';
 
@@ -19,15 +19,15 @@ import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 import { CreatePostForm } from './CreatePostForm';
 import { SearchPostForm } from './SearchPostForm';
 
-type Posts = OperationResponse<'PostsController_findAll'>;
+type Post = OperationResponse<'PostsController_findAll'>[number];
 
 interface PostListPanelProps {
-  initialPosts: Posts;
+  initialPosts: Post[];
 }
 
 export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
   const router = useRouter();
-  const [posts, setPosts] = useState<Posts>(initialPosts);
+  const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [error, setError] = useState<string | null>(null);
 
   // --- Update form ---
