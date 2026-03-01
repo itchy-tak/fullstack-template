@@ -3,7 +3,7 @@ import type { NextConfig } from 'next';
 export default {
   reactStrictMode: true,
   experimental: {
-    optimizePackageImports: ['@chakra-ui/react'],
+    optimizePackageImports: ['lucide-react'],
   },
   typescript: {
     ignoreBuildErrors: false,

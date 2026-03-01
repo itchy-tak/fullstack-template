@@ -1,24 +1,21 @@
 'use client';
 
-import { ChakraProvider, createSystem, defaultConfig, defineConfig } from '@chakra-ui/react';
+import type { ThemeProviderProps } from 'next-themes';
+import { ThemeProvider } from 'next-themes';
 import { ReactNode } from 'react';
 
-import { ColorModeProvider, type ColorModeProviderProps } from './color-mode';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
-const config = defineConfig({
-  globalCss: {
-    'html, body': {
-      backgroundColor: 'gray.50',
-    },
-  },
-});
-
-const system = createSystem(defaultConfig, config);
-
-export function Provider(props: ColorModeProviderProps): ReactNode {
+export function Provider({ children, ...props }: ThemeProviderProps): ReactNode {
   return (
-    <ChakraProvider value={system}>
-      <ColorModeProvider {...props} />
-    </ChakraProvider>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+      {...props}
+    >
+      <TooltipProvider>{children}</TooltipProvider>
+    </ThemeProvider>
   );
 }

@@ -1,40 +1,10 @@
-'use client';
-
-import {
-  createToaster,
-  Portal,
-  Spinner,
-  Stack,
-  Toast,
-  Toaster as ChakraToaster,
-} from '@chakra-ui/react';
-import { ReactNode } from 'react';
-
-export const toaster: ReturnType<typeof createToaster> = createToaster({
-  placement: 'bottom-end',
-  pauseOnPageIdle: true,
-});
-
-export const Toaster = (): ReactNode => {
-  return (
-    <Portal>
-      <ChakraToaster toaster={toaster} insetInline={{ mdDown: '4' }}>
-        {(toast) => (
-          <Toast.Root width={{ md: 'sm' }}>
-            {toast.type === 'loading' ? (
-              <Spinner size="sm" color="blue.solid" />
-            ) : (
-              <Toast.Indicator />
-            )}
-            <Stack gap="1" flex="1" maxWidth="100%">
-              {toast.title && <Toast.Title>{toast.title}</Toast.Title>}
-              {toast.description && <Toast.Description>{toast.description}</Toast.Description>}
-            </Stack>
-            {toast.action && <Toast.ActionTrigger>{toast.action.label}</Toast.ActionTrigger>}
-            {toast.meta?.closable && <Toast.CloseTrigger />}
-          </Toast.Root>
-        )}
-      </ChakraToaster>
-    </Portal>
-  );
-};
+/**
+ * Toast notifications are now powered by sonner.
+ *
+ * Usage:
+ *   import { toast } from 'sonner';
+ *   toast.success('Done!');
+ *
+ * The <Toaster /> component from sonner is mounted in layout.tsx.
+ */
+export { toast } from 'sonner';
