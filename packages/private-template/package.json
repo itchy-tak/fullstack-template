@@ -1,6 +1,6 @@
 {
-  "name": "@takuya-ichikawa/package-template",
-  "version": "0.0.1",
+  "name": "private-template",
+  "private": true,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -9,11 +9,6 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "publishConfig": {
-    "access": "restricted",
-    "registry": "https://npm.pkg.github.com"
-  },
-  "repository": "https://github.com/takuya-ichikawa/frontendtemplate",
   "scripts": {
     "build": "tsc --build",
     "typecheck": "tsc --noEmit",

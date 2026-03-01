@@ -48,7 +48,15 @@ async function replaceInFiles(dir, oldName, newName) {
 }
 
 async function main() {
-  // always ask interactively
+  // ask visibility first
+  const visibility = await ask('パッケージの種別を入力してください (public / private): ');
+  const isPrivate = visibility === 'private';
+  if (!isPrivate && visibility !== 'public') {
+    console.error('無効な入力です。"public" または "private" を入力してください。');
+    process.exit(1);
+  }
+
+  // ask package name
   const pkgName = await ask('新しいパッケージ名を入力してください: ');
 
   if (!sanitizeName(pkgName)) {
@@ -57,7 +65,8 @@ async function main() {
   }
 
   const root = process.cwd();
-  const template = path.join(root, 'packages', 'package-template');
+  const templateDir = isPrivate ? 'private-template' : 'public-template';
+  const template = path.join(root, 'packages', templateDir);
   const target = path.join(root, 'packages', pkgName);
 
   try {
@@ -89,26 +98,25 @@ async function main() {
     process.exit(1);
   }
 
-  // determine original name from template
-  let oldName = 'package-template';
+  // determine the template suffix to replace (e.g. "public-template" or "private-template")
+  const templateSuffix = isPrivate ? 'private-template' : 'public-template';
+  let oldName = templateSuffix;
   try {
     const tmplPkg = JSON.parse(await fs.readFile(path.join(template, 'package.json'), 'utf8'));
-    if (tmplPkg.name) oldName = tmplPkg.name;
+    if (tmplPkg.name) {
+      // Verify the suffix is present in the template name, then use the suffix as replacement key
+      if (!tmplPkg.name.includes(templateSuffix)) {
+        console.warn(
+          'テンプレートの name フィールドにサフィックスが見つかりませんでした。フォールバックします。',
+        );
+        oldName = tmplPkg.name;
+      }
+    }
   } catch {
     // ignore
   }
 
   await replaceInFiles(target, oldName, pkgName);
-
-  // update new package.json name field
-  try {
-    const newPkgPath = path.join(target, 'package.json');
-    const newPkg = JSON.parse(await fs.readFile(newPkgPath, 'utf8'));
-    newPkg.name = pkgName;
-    await fs.writeFile(newPkgPath, JSON.stringify(newPkg, null, 2) + '\n', 'utf8');
-  } catch (e) {
-    console.warn('package.json の更新に失敗しました:', e.message);
-  }
 
   // update tsconfig.json references
   try {

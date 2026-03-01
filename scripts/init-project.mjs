@@ -43,7 +43,7 @@ async function main() {
   const root = process.cwd();
   await replaceInFile(path.join(root, '.devcontainer', 'devcontainer.json'), repoName);
   await replaceInFile(path.join(root, 'package.json'), repoName);
-  await replaceInFile(path.join(root, 'packages', 'package-template', 'package.json'), repoName);
+  await replaceInFile(path.join(root, 'packages', 'public-template', 'package.json'), repoName);
 }
 
 main();
