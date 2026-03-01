@@ -1,7 +1,7 @@
 import baseConfig from '@takuya-ichikawa/eslint-config-base';
 
 export default [
-  { ignores: ['dist/', 'src/__generated__/'] },
+  { ignores: ['dist/', 'scripts/', 'src/__generated__/'] },
   ...baseConfig,
   {
     languageOptions: {
