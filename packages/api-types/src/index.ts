@@ -1,5 +1,5 @@
 /**
- * @takuya-ichikawa/api-types
+ * api-types
  *
  * Frontend / Backend 間で共有する API IF の定義。
  * openapi-typescript により OpenAPI spec から自動生成される型を

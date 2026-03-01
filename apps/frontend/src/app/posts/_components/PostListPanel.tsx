@@ -1,6 +1,6 @@
 'use client';
 
-import type { OperationResponse, Post } from '@takuya-ichikawa/api-types';
+import type { OperationResponse, Post } from 'api-types';
 import { useRouter } from 'next/navigation';
 import { ReactNode, useCallback, useState } from 'react';
 

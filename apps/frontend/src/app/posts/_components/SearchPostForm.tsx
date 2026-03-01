@@ -1,6 +1,6 @@
 'use client';
 
-import type { OperationResponse } from '@takuya-ichikawa/api-types';
+import type { OperationResponse } from 'api-types';
 import { ReactNode, useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';

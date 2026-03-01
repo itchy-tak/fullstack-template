@@ -1,4 +1,4 @@
-import type { OperationResponse } from '@takuya-ichikawa/api-types';
+import type { OperationResponse } from 'api-types';
 import { ReactNode } from 'react';
 
 import { Alert, AlertDescription } from '@/components/ui/alert';

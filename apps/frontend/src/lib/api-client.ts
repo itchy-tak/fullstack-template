@@ -27,8 +27,8 @@ import type {
   OperationRequest,
   OperationResponse,
   paths,
-} from '@takuya-ichikawa/api-types';
-import { OPERATION_MAP } from '@takuya-ichikawa/api-types';
+} from 'api-types';
+import { OPERATION_MAP } from 'api-types';
 import createClient from 'openapi-fetch';
 
 // ---------------------------------------------------------------------------

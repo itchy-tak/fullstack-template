@@ -1,6 +1,5 @@
 {
-  "name": "@takuya-ichikawa/api-types",
-  "version": "0.0.1",
+  "name": "api-types",
   "private": true,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
