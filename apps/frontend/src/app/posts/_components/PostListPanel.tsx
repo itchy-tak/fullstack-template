@@ -1,19 +1,22 @@
 'use client';
 
+import {
+  Alert,
+  Badge,
+  Button,
+  Card,
+  Checkbox,
+  Divider,
+  Group,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core';
 import type { OperationResponse } from 'api-types';
 import { useRouter } from 'next/navigation';
 import { ReactNode, useCallback, useState } from 'react';
 
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Heading } from '@/components/ui/heading';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Paragraph } from '@/components/ui/paragraph';
-import { Separator } from '@/components/ui/separator';
 import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
 import { CreatePostForm } from './CreatePostForm';
@@ -30,7 +33,6 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
   const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [error, setError] = useState<string | null>(null);
 
-  // --- Update form ---
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [editContent, setEditContent] = useState('');
@@ -59,10 +61,7 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
       if (editContent.trim()) {
         body.content = editContent;
       }
-      const params: ApiClientParams<'PostsController_update'> = {
-        path: { id },
-        body,
-      };
+      const params: ApiClientParams<'PostsController_update'> = { path: { id }, body };
       await apiClient('PostsController_update', params);
       setEditingId(null);
       setEditTitle('');
@@ -95,8 +94,8 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
   return (
     <>
       {error !== null && (
-        <Alert variant="destructive" className="mb-4">
-          <AlertDescription>{error}</AlertDescription>
+        <Alert color="red" mb="md">
+          {error}
         </Alert>
       )}
 
@@ -104,108 +103,102 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
 
       <SearchPostForm />
 
-      <Separator className="my-6" />
+      <Divider my="lg" />
 
-      {/* --- List --- */}
-      <Heading as="h2" className="mb-3 text-base">
+      <Title order={2} size="h5" mb="sm">
         All Posts
-      </Heading>
+      </Title>
+
       {posts.length === 0 ? (
-        <Paragraph variant="muted">
-          まだ投稿がありません。上のフォームから作成してください。
-        </Paragraph>
+        <Text c="dimmed">まだ投稿がありません。上のフォームから作成してください。</Text>
       ) : (
-        <div className="space-y-3">
+        <Stack gap="sm">
           {posts.map((post) => (
-            <Card key={post.id}>
-              <CardContent>
-                {editingId === post.id ? (
-                  <div className="flex flex-col gap-2">
-                    <Input
-                      placeholder="title"
-                      value={editTitle}
+            <Card key={post.id} withBorder>
+              {editingId === post.id ? (
+                <Stack gap="xs">
+                  <TextInput
+                    placeholder="title"
+                    value={editTitle}
+                    onChange={(e) => {
+                      setEditTitle(e.target.value);
+                    }}
+                  />
+                  <TextInput
+                    placeholder="content"
+                    value={editContent}
+                    onChange={(e) => {
+                      setEditContent(e.target.value);
+                    }}
+                  />
+                  <Group>
+                    <Checkbox
+                      id={`published-${String(post.id)}`}
+                      label="Published"
+                      checked={editPublished}
                       onChange={(e) => {
-                        setEditTitle(e.target.value);
+                        setEditPublished(e.target.checked);
                       }}
                     />
-                    <Input
-                      placeholder="content"
-                      value={editContent}
-                      onChange={(e) => {
-                        setEditContent(e.target.value);
+                    <Button size="sm" onClick={() => void handleUpdate(post.id)}>
+                      PATCH
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="default"
+                      onClick={() => {
+                        setEditingId(null);
                       }}
-                    />
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2">
-                        <Checkbox
-                          id={`published-${String(post.id)}`}
-                          checked={editPublished}
-                          onCheckedChange={(checked) => {
-                            setEditPublished(checked === true);
-                          }}
-                        />
-                        <Label htmlFor={`published-${String(post.id)}`}>Published</Label>
-                      </div>
-                      <Button size="sm" onClick={() => void handleUpdate(post.id)}>
-                        PATCH
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => {
-                          setEditingId(null);
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <CardTitle>
-                        #{post.id} — {post.title}
-                      </CardTitle>
-                      {post.content !== null && <Paragraph variant="sm">{post.content}</Paragraph>}
-                      <div className="flex items-center gap-2">
-                        <Badge variant={post.published ? 'default' : 'secondary'}>
-                          {post.published ? '公開' : '下書き'}
-                        </Badge>
-                        {post.authorId !== null && (
-                          <Paragraph variant="sm">Author ID: {String(post.authorId)}</Paragraph>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => {
-                          startEditing(post);
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => {
-                          void handleDelete(post.id);
-                        }}
-                      >
-                        DELETE
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
+                    >
+                      Cancel
+                    </Button>
+                  </Group>
+                </Stack>
+              ) : (
+                <Group justify="space-between" align="flex-start">
+                  <Stack gap={4}>
+                    <Title order={4}>
+                      #{post.id} — {post.title}
+                    </Title>
+                    {post.content !== null && <Text size="sm">{post.content}</Text>}
+                    <Group gap="xs">
+                      <Badge color={post.published ? 'blue' : 'gray'}>
+                        {post.published ? '公開' : '下書き'}
+                      </Badge>
+                      {post.authorId !== null && (
+                        <Text size="sm">Author ID: {String(post.authorId)}</Text>
+                      )}
+                    </Group>
+                  </Stack>
+                  <Group gap="xs">
+                    <Button
+                      size="sm"
+                      variant="default"
+                      onClick={() => {
+                        startEditing(post);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size="sm"
+                      color="red"
+                      onClick={() => {
+                        void handleDelete(post.id);
+                      }}
+                    >
+                      DELETE
+                    </Button>
+                  </Group>
+                </Group>
+              )}
             </Card>
           ))}
-        </div>
+        </Stack>
       )}
 
-      <div className="mt-6">
-        <Button variant="outline" onClick={() => void refreshPosts()}>
+      <div style={{ marginTop: 24 }}>
+        <Button variant="default" onClick={() => void refreshPosts()}>
           Refresh
         </Button>
       </div>

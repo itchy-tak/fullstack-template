@@ -1,12 +1,9 @@
 'use client';
 
+import { Button, Card, CardSection, Group, Text, TextInput, Title } from '@mantine/core';
 import type { OperationResponse } from 'api-types';
 import { ReactNode, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Paragraph } from '@/components/ui/paragraph';
 import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
 type AuthorDetail = OperationResponse<'AuthorsController_findOne'>;
@@ -34,33 +31,33 @@ export function SearchAuthorForm(): ReactNode {
   };
 
   return (
-    <Card className="mb-8">
-      <CardHeader>
-        <CardTitle>Get Author by ID</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="mb-2 flex items-center gap-2">
-          <Input
-            placeholder="id"
-            value={searchId}
-            onChange={(e) => {
-              setSearchId(e.target.value);
-            }}
-            className="max-w-[120px]"
-          />
-          <Button onClick={() => void handleSearch()}>GET</Button>
-        </div>
-        {searchError !== null && <Paragraph variant="destructive">{searchError}</Paragraph>}
-        {foundAuthor !== null && (
-          <Card className="mt-2">
-            <CardHeader>
-              <CardTitle>
-                #{foundAuthor.id} — {foundAuthor.name}
-              </CardTitle>
-            </CardHeader>
-          </Card>
-        )}
-      </CardContent>
+    <Card withBorder mb="lg">
+      <CardSection withBorder inheritPadding py="xs" mb="sm">
+        <strong>Get Author by ID</strong>
+      </CardSection>
+      <Group mb="xs">
+        <TextInput
+          placeholder="id"
+          value={searchId}
+          onChange={(e) => {
+            setSearchId(e.target.value);
+          }}
+          style={{ width: 120 }}
+        />
+        <Button onClick={() => void handleSearch()}>GET</Button>
+      </Group>
+      {searchError !== null && (
+        <Text c="red" size="sm">
+          {searchError}
+        </Text>
+      )}
+      {foundAuthor !== null && (
+        <Card withBorder mt="xs">
+          <Title order={4}>
+            #{foundAuthor.id} — {foundAuthor.name}
+          </Title>
+        </Card>
+      )}
     </Card>
   );
 }

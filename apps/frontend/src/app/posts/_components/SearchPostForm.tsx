@@ -1,13 +1,19 @@
 'use client';
 
+import {
+  Badge,
+  Button,
+  Card,
+  CardSection,
+  Group,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core';
 import type { OperationResponse } from 'api-types';
 import { ReactNode, useState } from 'react';
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Paragraph } from '@/components/ui/paragraph';
 import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
 type PostDetail = OperationResponse<'PostsController_findOne'>;
@@ -35,44 +41,48 @@ export function SearchPostForm(): ReactNode {
   };
 
   return (
-    <Card className="mb-8">
-      <CardHeader>
-        <CardTitle>Get Post by ID</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="mb-2 flex items-center gap-2">
-          <Input
-            placeholder="id"
-            value={searchId}
-            onChange={(e) => {
-              setSearchId(e.target.value);
-            }}
-            className="max-w-[120px]"
-          />
-          <Button onClick={() => void handleSearch()}>GET</Button>
-        </div>
-        {searchError !== null && <Paragraph variant="destructive">{searchError}</Paragraph>}
-        {foundPost !== null && (
-          <Card className="mt-2">
-            <CardHeader>
-              <CardTitle>
-                #{foundPost.id} — {foundPost.title}
-              </CardTitle>
-              {foundPost.content !== null && <CardDescription>{foundPost.content}</CardDescription>}
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-2">
-                <Badge variant={foundPost.published ? 'default' : 'secondary'}>
-                  {foundPost.published ? '公開' : '下書き'}
-                </Badge>
-                {foundPost.authorId !== null && (
-                  <Paragraph variant="sm">Author ID: {String(foundPost.authorId)}</Paragraph>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-      </CardContent>
+    <Card withBorder mb="lg">
+      <CardSection withBorder inheritPadding py="xs" mb="sm">
+        <strong>Get Post by ID</strong>
+      </CardSection>
+      <Group mb="xs">
+        <TextInput
+          placeholder="id"
+          value={searchId}
+          onChange={(e) => {
+            setSearchId(e.target.value);
+          }}
+          style={{ width: 120 }}
+        />
+        <Button onClick={() => void handleSearch()}>GET</Button>
+      </Group>
+      {searchError !== null && (
+        <Text c="red" size="sm">
+          {searchError}
+        </Text>
+      )}
+      {foundPost !== null && (
+        <Card withBorder mt="xs">
+          <Title order={4} mb={4}>
+            #{foundPost.id} — {foundPost.title}
+          </Title>
+          {foundPost.content !== null && (
+            <Text size="sm" c="dimmed" mb="xs">
+              {foundPost.content}
+            </Text>
+          )}
+          <Stack gap={4}>
+            <Group gap="xs">
+              <Badge color={foundPost.published ? 'blue' : 'gray'}>
+                {foundPost.published ? '公開' : '下書き'}
+              </Badge>
+              {foundPost.authorId !== null && (
+                <Text size="sm">Author ID: {String(foundPost.authorId)}</Text>
+              )}
+            </Group>
+          </Stack>
+        </Card>
+      )}
     </Card>
   );
 }

@@ -1,12 +1,8 @@
 'use client';
 
+import { Button, Card, CardSection, Checkbox, Group, Stack, TextInput } from '@mantine/core';
 import { ReactNode, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
 interface CreatePostFormProps {
@@ -45,53 +41,50 @@ export function CreatePostForm({ onCreated, onError }: CreatePostFormProps): Rea
   };
 
   return (
-    <Card className="mb-8">
-      <CardHeader>
-        <CardTitle>Create Post</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <Input
-              placeholder="title (required)"
-              value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            />
-            <Input
-              placeholder="authorId (optional)"
-              value={authorId}
-              onChange={(e) => {
-                setAuthorId(e.target.value);
-              }}
-              className="max-w-[160px]"
-            />
-          </div>
-          <Input
-            placeholder="content (optional)"
-            value={content}
+    <Card withBorder mb="lg">
+      <CardSection withBorder inheritPadding py="xs" mb="sm">
+        <strong>Create Post</strong>
+      </CardSection>
+      <Stack gap="sm">
+        <Group>
+          <TextInput
+            placeholder="title (required)"
+            value={title}
             onChange={(e) => {
-              setContent(e.target.value);
+              setTitle(e.target.value);
+            }}
+            style={{ flex: 1 }}
+          />
+          <TextInput
+            placeholder="authorId (optional)"
+            value={authorId}
+            onChange={(e) => {
+              setAuthorId(e.target.value);
+            }}
+            style={{ width: 160 }}
+          />
+        </Group>
+        <TextInput
+          placeholder="content (optional)"
+          value={content}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
+        />
+        <Group>
+          <Checkbox
+            id="create-post-published"
+            label="Published"
+            checked={published}
+            onChange={(e) => {
+              setPublished(e.target.checked);
             }}
           />
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <Checkbox
-                id="create-post-published"
-                checked={published}
-                onCheckedChange={(checked) => {
-                  setPublished(checked === true);
-                }}
-              />
-              <Label htmlFor="create-post-published">Published</Label>
-            </div>
-            <Button onClick={() => void handleCreate()} className="shrink-0">
-              POST
-            </Button>
-          </div>
-        </div>
-      </CardContent>
+          <Button onClick={() => void handleCreate()} style={{ flexShrink: 0 }}>
+            POST
+          </Button>
+        </Group>
+      </Stack>
     </Card>
   );
 }

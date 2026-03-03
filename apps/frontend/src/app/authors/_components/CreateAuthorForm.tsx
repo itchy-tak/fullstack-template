@@ -1,10 +1,8 @@
 'use client';
 
+import { Button, Card, CardSection, Group, TextInput } from '@mantine/core';
 import { ReactNode, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
 interface CreateAuthorFormProps {
@@ -29,24 +27,23 @@ export function CreateAuthorForm({ onCreated, onError }: CreateAuthorFormProps):
   };
 
   return (
-    <Card className="mb-8">
-      <CardHeader>
-        <CardTitle>Create Author</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex items-center gap-2">
-          <Input
-            placeholder="name (optional)"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
-          <Button onClick={() => void handleCreate()} className="shrink-0">
-            POST
-          </Button>
-        </div>
-      </CardContent>
+    <Card withBorder mb="lg">
+      <CardSection withBorder inheritPadding py="xs" mb="sm">
+        <strong>Create Author</strong>
+      </CardSection>
+      <Group>
+        <TextInput
+          placeholder="name (optional)"
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+          style={{ flex: 1 }}
+        />
+        <Button onClick={() => void handleCreate()} style={{ flexShrink: 0 }}>
+          POST
+        </Button>
+      </Group>
     </Card>
   );
 }

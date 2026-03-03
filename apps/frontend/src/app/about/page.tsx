@@ -1,68 +1,59 @@
+import { Card, Container, Divider, List, ListItem, Text, Title } from '@mantine/core';
 import { ReactNode } from 'react';
-
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heading } from '@/components/ui/heading';
-import { List, ListItem } from '@/components/ui/list';
-import { Paragraph } from '@/components/ui/paragraph';
-import { Separator } from '@/components/ui/separator';
 
 export default function AboutPage(): ReactNode {
   return (
-    <div className="mx-auto max-w-[800px] px-4 py-10">
-      <Heading as="h1" className="mb-6 text-3xl">
+    <Container size="sm" py="xl">
+      <Title order={1} mb="lg">
         About this Template
-      </Heading>
+      </Title>
 
-      <Paragraph className="mb-6">
+      <Text mb="lg">
         このプロジェクトは、モダンなフルスタック開発のためのモノレポテンプレートです。
         以下の技術スタックで構成されています。
-      </Paragraph>
+      </Text>
 
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle>技術スタック</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <List>
-            <ListItem>
-              <span className="font-bold">Frontend:</span> Next.js 16 / React 19 / shadcn/ui
-            </ListItem>
-            <ListItem>
-              <span className="font-bold">Backend:</span> NestJS 11 / Prisma 6
-            </ListItem>
-            <ListItem>
-              <span className="font-bold">Monorepo:</span> Turborepo / pnpm workspaces
-            </ListItem>
-            <ListItem>
-              <span className="font-bold">Linting:</span> ESLint 9 (flat config) / Prettier
-            </ListItem>
-            <ListItem>
-              <span className="font-bold">Language:</span> TypeScript 5.9
-            </ListItem>
-          </List>
-        </CardContent>
+      <Card withBorder mb="lg">
+        <Title order={2} size="h4" mb="sm">
+          技術スタック
+        </Title>
+        <List>
+          <ListItem>
+            <strong>Frontend:</strong> Next.js 16 / React 19 / Mantine v7
+          </ListItem>
+          <ListItem>
+            <strong>Backend:</strong> NestJS 11 / Prisma 6
+          </ListItem>
+          <ListItem>
+            <strong>Monorepo:</strong> Turborepo / pnpm workspaces
+          </ListItem>
+          <ListItem>
+            <strong>Linting:</strong> ESLint 9 (flat config) / Prettier
+          </ListItem>
+          <ListItem>
+            <strong>Language:</strong> TypeScript 5.9
+          </ListItem>
+        </List>
       </Card>
 
-      <Separator className="my-6" />
+      <Divider my="lg" />
 
-      <Card>
-        <CardHeader>
-          <CardTitle>プロジェクト構成</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <List>
-            <ListItem>
-              <span className="font-bold">apps/frontend</span> — Next.js アプリケーション
-            </ListItem>
-            <ListItem>
-              <span className="font-bold">apps/backend</span> — NestJS API サーバー
-            </ListItem>
-            <ListItem>
-              <span className="font-bold">packages/api-types</span> — 共有型定義
-            </ListItem>
-          </List>
-        </CardContent>
+      <Card withBorder>
+        <Title order={2} size="h4" mb="sm">
+          プロジェクト構成
+        </Title>
+        <List>
+          <ListItem>
+            <strong>apps/frontend</strong> — Next.js アプリケーション
+          </ListItem>
+          <ListItem>
+            <strong>apps/backend</strong> — NestJS API サーバー
+          </ListItem>
+          <ListItem>
+            <strong>packages/api-types</strong> — 共有型定義
+          </ListItem>
+        </List>
       </Card>
-    </div>
+    </Container>
   );
 }

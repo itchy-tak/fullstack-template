@@ -1,9 +1,7 @@
+import { Alert, Container, Text, Title } from '@mantine/core';
 import type { OperationResponse } from 'api-types';
 import { ReactNode } from 'react';
 
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Heading } from '@/components/ui/heading';
-import { Paragraph } from '@/components/ui/paragraph';
 import { apiClient } from '@/lib/api-client.server';
 
 import { AuthorListPanel } from './_components';
@@ -26,23 +24,21 @@ export default async function AuthorsPage(): Promise<ReactNode> {
   }
 
   return (
-    <div className="mx-auto max-w-[800px] px-4 py-10">
-      <Heading as="h1" className="mb-2 text-3xl">
+    <Container size="sm" py="xl">
+      <Title order={1} mb={4}>
         Authors
-      </Heading>
-      <Paragraph variant="sm" className="mb-6">
+      </Title>
+      <Text size="sm" c="dimmed" mb="lg">
         SSR — サーバーサイドでデータ取得 / CSR コンポーネントで CRUD 操作
-      </Paragraph>
+      </Text>
 
       {fetchError !== null && (
-        <Alert variant="destructive" className="mb-4">
-          <AlertDescription>
-            サーバーサイドでのデータ取得に失敗しました: {fetchError}
-          </AlertDescription>
+        <Alert color="red" mb="md">
+          サーバーサイドでのデータ取得に失敗しました: {fetchError}
         </Alert>
       )}
 
       <AuthorListPanel initialAuthors={initialAuthors} />
-    </div>
+    </Container>
   );
 }

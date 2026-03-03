@@ -1,16 +1,10 @@
 'use client';
 
+import { Alert, Button, Card, Divider, Group, Stack, Text, TextInput, Title } from '@mantine/core';
 import type { OperationResponse } from 'api-types';
 import { useRouter } from 'next/navigation';
 import { ReactNode, useCallback, useState } from 'react';
 
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { Heading } from '@/components/ui/heading';
-import { Input } from '@/components/ui/input';
-import { Paragraph } from '@/components/ui/paragraph';
-import { Separator } from '@/components/ui/separator';
 import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
 import { CreateAuthorForm } from './CreateAuthorForm';
@@ -27,7 +21,6 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
   const [authors, setAuthors] = useState<Author[]>(initialAuthors);
   const [error, setError] = useState<string | null>(null);
 
-  // --- Update form ---
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editName, setEditName] = useState('');
 
@@ -49,10 +42,7 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
       if (editName.trim()) {
         body.name = editName;
       }
-      const params: ApiClientParams<'AuthorsController_update'> = {
-        path: { id },
-        body,
-      };
+      const params: ApiClientParams<'AuthorsController_update'> = { path: { id }, body };
       await apiClient('AuthorsController_update', params);
       setEditingId(null);
       setEditName('');
@@ -81,8 +71,8 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
   return (
     <>
       {error !== null && (
-        <Alert variant="destructive" className="mb-4">
-          <AlertDescription>{error}</AlertDescription>
+        <Alert color="red" mb="md">
+          {error}
         </Alert>
       )}
 
@@ -90,83 +80,75 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
 
       <SearchAuthorForm />
 
-      <Separator className="my-6" />
+      <Divider my="lg" />
 
-      {/* --- List --- */}
-      <Heading as="h2" className="mb-3 text-base">
+      <Title order={2} size="h5" mb="sm">
         All Authors
-      </Heading>
+      </Title>
+
       {authors.length === 0 ? (
-        <Paragraph variant="muted">著者がいません。上のフォームから作成してください。</Paragraph>
+        <Text c="dimmed">著者がいません。上のフォームから作成してください。</Text>
       ) : (
-        <div className="space-y-3">
+        <Stack gap="sm">
           {authors.map((author) => (
-            <Card key={author.id}>
-              <CardContent>
-                {editingId === author.id ? (
-                  <div className="flex flex-col gap-2">
-                    <Input
-                      placeholder="name"
-                      value={editName}
-                      onChange={(e) => {
-                        setEditName(e.target.value);
+            <Card key={author.id} withBorder>
+              {editingId === author.id ? (
+                <Stack gap="xs">
+                  <TextInput
+                    placeholder="name"
+                    value={editName}
+                    onChange={(e) => {
+                      setEditName(e.target.value);
+                    }}
+                  />
+                  <Group>
+                    <Button
+                      size="sm"
+                      onClick={() => {
+                        void handleUpdate(author.id);
                       }}
-                    />
-                    <div className="flex items-center gap-2">
-                      <Button
-                        size="sm"
-                        onClick={() => {
-                          void handleUpdate(author.id);
-                        }}
-                      >
-                        PATCH
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => {
-                          setEditingId(null);
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <CardTitle>
-                        #{author.id} — {author.name}
-                      </CardTitle>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => {
-                          startEditing(author);
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => void handleDelete(author.id)}
-                      >
-                        DELETE
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
+                    >
+                      PATCH
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="default"
+                      onClick={() => {
+                        setEditingId(null);
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </Group>
+                </Stack>
+              ) : (
+                <Group justify="space-between">
+                  <Title order={4}>
+                    #{author.id} — {author.name}
+                  </Title>
+                  <Group gap="xs">
+                    <Button
+                      size="sm"
+                      variant="default"
+                      onClick={() => {
+                        startEditing(author);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button size="sm" color="red" onClick={() => void handleDelete(author.id)}>
+                      DELETE
+                    </Button>
+                  </Group>
+                </Group>
+              )}
             </Card>
           ))}
-        </div>
+        </Stack>
       )}
 
-      <div className="mt-6">
-        <Button variant="outline" onClick={() => void refreshAuthors()}>
+      <div style={{ marginTop: 24 }}>
+        <Button variant="default" onClick={() => void refreshAuthors()}>
           Refresh
         </Button>
       </div>
