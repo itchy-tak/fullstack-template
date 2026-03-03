@@ -3,6 +3,7 @@
 import {
   Alert,
   Badge,
+  Box,
   Button,
   Card,
   Checkbox,
@@ -197,11 +198,11 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
         </Stack>
       )}
 
-      <div style={{ marginTop: 24 }}>
+      <Box mt={24}>
         <Button variant="default" onClick={() => void refreshPosts()}>
           Refresh
         </Button>
-      </div>
+      </Box>
     </>
   );
 }

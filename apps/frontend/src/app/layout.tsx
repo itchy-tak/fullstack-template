@@ -1,20 +1,28 @@
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
-import { ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
 
-import { MantineClientProvider } from '@/components/MantineClientProvider';
+import { GlobalHeader } from '@/components/GlobalHeader';
 
 export default function RootLayout(props: { children: ReactNode }): ReactNode {
   const { children } = props;
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineClientProvider>{children}</MantineClientProvider>
+        <SessionProvider>
+          <MantineProvider>
+            <Notifications position="bottom-right" />
+            <GlobalHeader />
+            <main>{children}</main>
+          </MantineProvider>
+        </SessionProvider>
       </body>
     </html>
   );

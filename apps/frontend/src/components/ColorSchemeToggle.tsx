@@ -4,7 +4,9 @@ import { ActionIcon, useComputedColorScheme, useMantineColorScheme } from '@mant
 import { IconMoon, IconSun } from '@tabler/icons-react';
 import { ReactNode } from 'react';
 
-export function ColorSchemeToggle(): ReactNode {
+import { withClientOnly } from '@/utlis/with-client-only';
+
+function ColorSchemeToggleContent(): ReactNode {
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme('light');
 
@@ -18,3 +20,6 @@ export function ColorSchemeToggle(): ReactNode {
     </ActionIcon>
   );
 }
+
+// withClientOnly を適用して、クライアント側でのみレンダリングされるようにする
+export const ColorSchemeToggle = withClientOnly(ColorSchemeToggleContent);

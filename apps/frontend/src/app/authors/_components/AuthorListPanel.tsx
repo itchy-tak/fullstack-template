@@ -1,6 +1,17 @@
 'use client';
 
-import { Alert, Button, Card, Divider, Group, Stack, Text, TextInput, Title } from '@mantine/core';
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  Divider,
+  Group,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core';
 import type { OperationResponse } from 'api-types';
 import { useRouter } from 'next/navigation';
 import { ReactNode, useCallback, useState } from 'react';
@@ -147,11 +158,11 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
         </Stack>
       )}
 
-      <div style={{ marginTop: 24 }}>
+      <Box mt={24}>
         <Button variant="default" onClick={() => void refreshAuthors()}>
           Refresh
         </Button>
-      </div>
+      </Box>
     </>
   );
 }
