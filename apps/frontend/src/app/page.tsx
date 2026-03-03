@@ -1,53 +1,43 @@
+import { Badge, Card, Container, Divider, List, ListItem, Text, Title } from '@mantine/core';
+import Link from 'next/link';
 import { ReactNode } from 'react';
-
-import { AppLink } from '@/components/ui/app-link';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heading } from '@/components/ui/heading';
-import { List, ListItem } from '@/components/ui/list';
-import { Paragraph } from '@/components/ui/paragraph';
-import { Separator } from '@/components/ui/separator';
 
 export default function Home(): ReactNode {
   return (
-    <div className="mx-auto max-w-[800px] px-4 py-10">
-      <div className="mb-10 text-center">
-        <Heading as="h1" className="mb-4">
-          Frontend Template
-        </Heading>
-        <Paragraph variant="muted" className="text-lg">
-          Next.js
-        </Paragraph>
-      </div>
+    <Container size="sm" py="xl">
+      <Title order={1} ta="center" mb="md">
+        Frontend Template
+      </Title>
+      <Text c="dimmed" ta="center" size="lg" mb="xl">
+        Next.js
+      </Text>
 
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>ページ</CardTitle>
-          <CardDescription>各ページへのリンク</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <List>
-            <ListItem>
-              <AppLink href="/about">/about</AppLink> — テンプレート情報（SSG：静的生成ページ）
-            </ListItem>
-          </List>
-        </CardContent>
+      <Card withBorder mb="lg">
+        <Title order={2} size="h4" mb={4}>
+          ページ
+        </Title>
+        <Text size="sm" c="dimmed" mb="sm">
+          各ページへのリンク
+        </Text>
+        <List>
+          <ListItem>
+            <Link href="/about">/about</Link> — テンプレート情報（SSG：静的生成ページ）
+          </ListItem>
+        </List>
       </Card>
 
-      <Separator className="my-6" />
+      <Divider my="md" />
 
-      <Card>
-        <CardHeader>
-          <CardTitle>API Routes</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <List>
-            <ListItem>
-              <Badge variant="outline">/api/template</Badge> — Route Handler テンプレート
-            </ListItem>
-          </List>
-        </CardContent>
+      <Card withBorder>
+        <Title order={2} size="h4" mb="sm">
+          API Routes
+        </Title>
+        <List>
+          <ListItem>
+            <Badge variant="outline">/api/template</Badge> — Route Handler テンプレート
+          </ListItem>
+        </List>
       </Card>
-    </div>
+    </Container>
   );
 }
