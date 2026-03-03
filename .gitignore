@@ -28,3 +28,6 @@ build
 # tmp
 .local/*
 !.local/.gitkeep
+
+# generated
+apps/backend/prisma/__generated__/

@@ -28,7 +28,7 @@ export default function Home(): ReactNode {
         <CardContent>
           <List>
             <ListItem>
-              <AppLink href="/users">/users</AppLink> — ユーザー CRUD（一覧・作成・更新・削除・ID
+              <AppLink href="/authors">/authors</AppLink> — 著者 CRUD（一覧・作成・更新・削除・ID
               検索）
             </ListItem>
             <ListItem>

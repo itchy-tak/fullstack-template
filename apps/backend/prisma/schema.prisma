@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "./__generated__"
 }
 
 datasource db {
@@ -13,18 +14,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Author {
   id    Int     @id @default(autoincrement())
-  email String  @unique
   name  String?
   posts Post[]
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   title     String
   content   String?
   published Boolean
-  author    User?    @relation(fields: [authorId], references: [id])
+  author    Author? @relation(fields: [authorId], references: [id])
   authorId  Int?
 }

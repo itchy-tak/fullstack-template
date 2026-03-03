@@ -7,25 +7,20 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
-interface CreateUserFormProps {
+interface CreateAuthorFormProps {
   onCreated: () => void;
   onError: (message: string) => void;
 }
 
-export function CreateUserForm({ onCreated, onError }: CreateUserFormProps): ReactNode {
-  const [email, setEmail] = useState('');
+export function CreateAuthorForm({ onCreated, onError }: CreateAuthorFormProps): ReactNode {
   const [name, setName] = useState('');
 
   const handleCreate = async (): Promise<void> => {
-    if (!email.trim()) {
-      return;
-    }
     try {
-      const params: ApiClientParams<'UsersController_create'> = {
-        body: { email, ...(name ? { name } : {}) },
+      const params: ApiClientParams<'AuthorsController_create'> = {
+        body: { ...(name ? { name } : {}) },
       };
-      await apiClient('UsersController_create', params);
-      setEmail('');
+      await apiClient('AuthorsController_create', params);
       setName('');
       onCreated();
     } catch (e) {
@@ -36,17 +31,10 @@ export function CreateUserForm({ onCreated, onError }: CreateUserFormProps): Rea
   return (
     <Card className="mb-8">
       <CardHeader>
-        <CardTitle>Create User</CardTitle>
+        <CardTitle>Create Author</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center gap-2">
-          <Input
-            placeholder="email (required)"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
           <Input
             placeholder="name (optional)"
             value={name}

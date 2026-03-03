@@ -6,29 +6,29 @@ import { Heading } from '@/components/ui/heading';
 import { Paragraph } from '@/components/ui/paragraph';
 import { apiClient } from '@/lib/api-client.server';
 
-import { UserListPanel } from './_components';
+import { AuthorListPanel } from './_components';
 
-type Users = OperationResponse<'UsersController_findAll'>;
+type Authors = OperationResponse<'AuthorsController_findAll'>;
 
 /**
- * /users — SSR page (Server Component).
- * サーバーサイドで Backend API からユーザー一覧を取得し、
+ * /authors — SSR page (Server Component).
+ * サーバーサイドで Backend API から著者一覧を取得し、
  * インタラクティブな CRUD 操作は Client Component に委譲する。
  */
-export default async function UsersPage(): Promise<ReactNode> {
-  let initialUsers: Users = [];
+export default async function AuthorsPage(): Promise<ReactNode> {
+  let initialAuthors: Authors = [];
   let fetchError: string | null = null;
 
   try {
-    initialUsers = await apiClient('UsersController_findAll');
+    initialAuthors = await apiClient('AuthorsController_findAll');
   } catch (e) {
-    fetchError = e instanceof Error ? e.message : 'Failed to fetch users';
+    fetchError = e instanceof Error ? e.message : 'Failed to fetch authors';
   }
 
   return (
     <div className="mx-auto max-w-[800px] px-4 py-10">
       <Heading as="h1" className="mb-2 text-3xl">
-        Users
+        Authors
       </Heading>
       <Paragraph variant="sm" className="mb-6">
         SSR — サーバーサイドでデータ取得 / CSR コンポーネントで CRUD 操作
@@ -42,7 +42,7 @@ export default async function UsersPage(): Promise<ReactNode> {
         </Alert>
       )}
 
-      <UserListPanel initialUsers={initialUsers} />
+      <AuthorListPanel initialAuthors={initialAuthors} />
     </div>
   );
 }

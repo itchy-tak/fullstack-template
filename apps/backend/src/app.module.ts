@@ -4,11 +4,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SafeConfigModule } from './common/config/safe-config.module';
 import { PrismaModule } from './common/prisma/prisma.module';
+import { AuthorsModule } from './features/authors/authors.module';
 import { PostsModule } from './features/posts/posts.module';
-import { UsersModule } from './features/users/users.module';
 
 @Module({
-  imports: [SafeConfigModule, PrismaModule, UsersModule, PostsModule],
+  imports: [SafeConfigModule, PrismaModule, AuthorsModule, PostsModule],
   controllers: [AppController],
   providers: [AppService],
 })

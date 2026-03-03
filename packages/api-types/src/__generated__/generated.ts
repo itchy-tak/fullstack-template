@@ -20,36 +20,36 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users": {
+    "/authors": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["UsersController_findAll"];
+        get: operations["AuthorsController_findAll"];
         put?: never;
-        post: operations["UsersController_create"];
+        post: operations["AuthorsController_create"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/users/{id}": {
+    "/authors/{id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["UsersController_findOne"];
+        get: operations["AuthorsController_findOne"];
         put?: never;
         post?: never;
-        delete: operations["UsersController_remove"];
+        delete: operations["AuthorsController_remove"];
         options?: never;
         head?: never;
-        patch: operations["UsersController_update"];
+        patch: operations["AuthorsController_update"];
         trace?: never;
     };
     "/posts": {
@@ -88,19 +88,14 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        UserResponseDto: {
+        AuthorResponseDto: {
             id: number;
-            email: string;
             name: string | null;
         };
-        CreateUserDto: {
-            /** Format: email */
-            email: string;
+        CreateAuthorDto: {
             name?: string;
         };
-        UpdateUserDto: {
-            /** Format: email */
-            email?: string;
+        UpdateAuthorDto: {
             name?: string;
         };
         PostResponseDto: {
@@ -147,7 +142,7 @@ export interface operations {
             };
         };
     };
-    UsersController_findAll: {
+    AuthorsController_findAll: {
         parameters: {
             query?: never;
             header?: never;
@@ -161,12 +156,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserResponseDto"][];
+                    "application/json": components["schemas"]["AuthorResponseDto"][];
                 };
             };
         };
     };
-    UsersController_create: {
+    AuthorsController_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -175,7 +170,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateUserDto"];
+                "application/json": components["schemas"]["CreateAuthorDto"];
             };
         };
         responses: {
@@ -184,12 +179,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserResponseDto"];
+                    "application/json": components["schemas"]["AuthorResponseDto"];
                 };
             };
         };
     };
-    UsersController_findOne: {
+    AuthorsController_findOne: {
         parameters: {
             query?: never;
             header?: never;
@@ -205,12 +200,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserResponseDto"];
+                    "application/json": components["schemas"]["AuthorResponseDto"];
                 };
             };
         };
     };
-    UsersController_remove: {
+    AuthorsController_remove: {
         parameters: {
             query?: never;
             header?: never;
@@ -226,12 +221,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserResponseDto"];
+                    "application/json": components["schemas"]["AuthorResponseDto"];
                 };
             };
         };
     };
-    UsersController_update: {
+    AuthorsController_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -242,7 +237,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UpdateUserDto"];
+                "application/json": components["schemas"]["UpdateAuthorDto"];
             };
         };
         responses: {
@@ -251,7 +246,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserResponseDto"];
+                    "application/json": components["schemas"]["AuthorResponseDto"];
                 };
             };
         };

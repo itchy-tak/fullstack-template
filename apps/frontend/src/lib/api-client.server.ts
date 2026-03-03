@@ -10,16 +10,16 @@
  * @example
  * ```ts
  * // パラメータなし
- * const users = await apiClient('UsersController_findAll');
+ * const authors = await apiClient('AuthorsController_findAll');
  *
  * // path params + body
- * const updated = await apiClient('UsersController_update', {
+ * const updated = await apiClient('AuthorsController_update', {
  *   path: { id: 1 },
  *   body: { name: 'new name' },
  * });
  *
  * // body のみ
- * const created = await apiClient('UsersController_create', {
+ * const created = await apiClient('AuthorsController_create', {
  *   body: { email: 'a@b.com', name: 'Alice' },
  * });
  * ```

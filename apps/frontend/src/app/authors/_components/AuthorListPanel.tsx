@@ -13,30 +13,29 @@ import { Paragraph } from '@/components/ui/paragraph';
 import { Separator } from '@/components/ui/separator';
 import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
-import { CreateUserForm } from './CreateUserForm';
-import { SearchUserForm } from './SearchUserForm';
+import { CreateAuthorForm } from './CreateAuthorForm';
+import { SearchAuthorForm } from './SearchAuthorForm';
 
-type User = OperationResponse<'UsersController_findAll'>[number];
+type Author = OperationResponse<'AuthorsController_findAll'>[number];
 
-interface UserListPanelProps {
-  initialUsers: User[];
+interface AuthorListPanelProps {
+  initialAuthors: Author[];
 }
 
-export function UserListPanel({ initialUsers }: UserListPanelProps): ReactNode {
+export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): ReactNode {
   const router = useRouter();
-  const [users, setUsers] = useState<User[]>(initialUsers);
+  const [authors, setAuthors] = useState<Author[]>(initialAuthors);
   const [error, setError] = useState<string | null>(null);
 
   // --- Update form ---
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [editEmail, setEditEmail] = useState('');
   const [editName, setEditName] = useState('');
 
-  const refreshUsers = useCallback(async () => {
+  const refreshAuthors = useCallback(async () => {
     setError(null);
     try {
-      const data = await apiClient('UsersController_findAll');
-      setUsers(data);
+      const data = await apiClient('AuthorsController_findAll');
+      setAuthors(data);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Unknown error');
     }
@@ -46,22 +45,18 @@ export function UserListPanel({ initialUsers }: UserListPanelProps): ReactNode {
   const handleUpdate = async (id: number): Promise<void> => {
     setError(null);
     try {
-      const body: { email?: string; name?: string } = {};
-      if (editEmail.trim()) {
-        body.email = editEmail;
-      }
+      const body: { name?: string } = {};
       if (editName.trim()) {
         body.name = editName;
       }
-      const params: ApiClientParams<'UsersController_update'> = {
+      const params: ApiClientParams<'AuthorsController_update'> = {
         path: { id },
         body,
       };
-      await apiClient('UsersController_update', params);
+      await apiClient('AuthorsController_update', params);
       setEditingId(null);
-      setEditEmail('');
       setEditName('');
-      await refreshUsers();
+      await refreshAuthors();
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Update failed');
     }
@@ -70,18 +65,17 @@ export function UserListPanel({ initialUsers }: UserListPanelProps): ReactNode {
   const handleDelete = async (id: number): Promise<void> => {
     setError(null);
     try {
-      const removeParams: ApiClientParams<'UsersController_remove'> = { path: { id } };
-      await apiClient('UsersController_remove', removeParams);
-      await refreshUsers();
+      const removeParams: ApiClientParams<'AuthorsController_remove'> = { path: { id } };
+      await apiClient('AuthorsController_remove', removeParams);
+      await refreshAuthors();
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Delete failed');
     }
   };
 
-  const startEditing = (user: User): void => {
-    setEditingId(user.id);
-    setEditEmail(user.email);
-    setEditName(user.name ?? '');
+  const startEditing = (author: Author): void => {
+    setEditingId(author.id);
+    setEditName(author.name ?? '');
   };
 
   return (
@@ -92,34 +86,25 @@ export function UserListPanel({ initialUsers }: UserListPanelProps): ReactNode {
         </Alert>
       )}
 
-      <CreateUserForm onCreated={() => void refreshUsers()} onError={setError} />
+      <CreateAuthorForm onCreated={() => void refreshAuthors()} onError={setError} />
 
-      <SearchUserForm />
+      <SearchAuthorForm />
 
       <Separator className="my-6" />
 
       {/* --- List --- */}
       <Heading as="h2" className="mb-3 text-base">
-        All Users
+        All Authors
       </Heading>
-      {users.length === 0 ? (
-        <Paragraph variant="muted">
-          ユーザーがいません。上のフォームから作成してください。
-        </Paragraph>
+      {authors.length === 0 ? (
+        <Paragraph variant="muted">著者がいません。上のフォームから作成してください。</Paragraph>
       ) : (
         <div className="space-y-3">
-          {users.map((user) => (
-            <Card key={user.id}>
+          {authors.map((author) => (
+            <Card key={author.id}>
               <CardContent>
-                {editingId === user.id ? (
+                {editingId === author.id ? (
                   <div className="flex flex-col gap-2">
-                    <Input
-                      placeholder="email"
-                      value={editEmail}
-                      onChange={(e) => {
-                        setEditEmail(e.target.value);
-                      }}
-                    />
                     <Input
                       placeholder="name"
                       value={editName}
@@ -131,7 +116,7 @@ export function UserListPanel({ initialUsers }: UserListPanelProps): ReactNode {
                       <Button
                         size="sm"
                         onClick={() => {
-                          void handleUpdate(user.id);
+                          void handleUpdate(author.id);
                         }}
                       >
                         PATCH
@@ -151,16 +136,15 @@ export function UserListPanel({ initialUsers }: UserListPanelProps): ReactNode {
                   <div className="flex items-center justify-between">
                     <div className="space-y-1">
                       <CardTitle>
-                        #{user.id} — {user.email}
+                        #{author.id} — {author.name}
                       </CardTitle>
-                      {user.name !== null && <Paragraph variant="muted">{user.name}</Paragraph>}
                     </div>
                     <div className="flex items-center gap-1">
                       <Button
                         size="sm"
                         variant="outline"
                         onClick={() => {
-                          startEditing(user);
+                          startEditing(author);
                         }}
                       >
                         Edit
@@ -168,7 +152,7 @@ export function UserListPanel({ initialUsers }: UserListPanelProps): ReactNode {
                       <Button
                         size="sm"
                         variant="destructive"
-                        onClick={() => void handleDelete(user.id)}
+                        onClick={() => void handleDelete(author.id)}
                       >
                         DELETE
                       </Button>
@@ -182,7 +166,7 @@ export function UserListPanel({ initialUsers }: UserListPanelProps): ReactNode {
       )}
 
       <div className="mt-6">
-        <Button variant="outline" onClick={() => void refreshUsers()}>
+        <Button variant="outline" onClick={() => void refreshAuthors()}>
           Refresh
         </Button>
       </div>

@@ -6,10 +6,10 @@
 
 ```ts
 // NG
-if (!user) return null;
+if (!author) return null;
 
 // OK
-if (!user) {
+if (!author) {
   return null;
 }
 ```

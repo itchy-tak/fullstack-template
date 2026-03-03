@@ -9,25 +9,25 @@ import { Input } from '@/components/ui/input';
 import { Paragraph } from '@/components/ui/paragraph';
 import { apiClient, type ApiClientParams } from '@/lib/api-client.server';
 
-type UserDetail = OperationResponse<'UsersController_findOne'>;
+type AuthorDetail = OperationResponse<'AuthorsController_findOne'>;
 
-export function SearchUserForm(): ReactNode {
+export function SearchAuthorForm(): ReactNode {
   const [searchId, setSearchId] = useState('');
-  const [foundUser, setFoundUser] = useState<UserDetail | null>(null);
+  const [foundAuthor, setFoundAuthor] = useState<AuthorDetail | null>(null);
   const [searchError, setSearchError] = useState<string | null>(null);
 
   const handleSearch = async (): Promise<void> => {
     setSearchError(null);
-    setFoundUser(null);
+    setFoundAuthor(null);
     if (!searchId.trim()) {
       return;
     }
     try {
-      const params: ApiClientParams<'UsersController_findOne'> = {
+      const params: ApiClientParams<'AuthorsController_findOne'> = {
         path: { id: Number(searchId) },
       };
-      const data = await apiClient('UsersController_findOne', params);
-      setFoundUser(data);
+      const data = await apiClient('AuthorsController_findOne', params);
+      setFoundAuthor(data);
     } catch (e) {
       setSearchError(e instanceof Error ? e.message : 'Not found');
     }
@@ -36,7 +36,7 @@ export function SearchUserForm(): ReactNode {
   return (
     <Card className="mb-8">
       <CardHeader>
-        <CardTitle>Get User by ID</CardTitle>
+        <CardTitle>Get Author by ID</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="mb-2 flex items-center gap-2">
@@ -51,18 +51,13 @@ export function SearchUserForm(): ReactNode {
           <Button onClick={() => void handleSearch()}>GET</Button>
         </div>
         {searchError !== null && <Paragraph variant="destructive">{searchError}</Paragraph>}
-        {foundUser !== null && (
+        {foundAuthor !== null && (
           <Card className="mt-2">
             <CardHeader>
               <CardTitle>
-                #{foundUser.id} — {foundUser.email}
+                #{foundAuthor.id} — {foundAuthor.name}
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <Paragraph variant="muted">
-                {foundUser.name !== null ? foundUser.name : '(名前未設定)'}
-              </Paragraph>
-            </CardContent>
           </Card>
         )}
       </CardContent>
