@@ -23,6 +23,9 @@ export default function Home(): ReactNode {
           <ListItem>
             <Link href="/about">/about</Link> — テンプレート情報（SSG：静的生成ページ）
           </ListItem>
+          <ListItem>
+            <Link href="/protected">/protected</Link> — 認証必須ページ（テンプレート）
+          </ListItem>
         </List>
       </Card>
 
