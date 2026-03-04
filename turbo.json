@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/turbo/schema.json",
+  "globalPassThroughEnv": ["NPM_TOKEN"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
