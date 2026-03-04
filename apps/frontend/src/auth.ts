@@ -1,5 +1,8 @@
 import NextAuth from 'next-auth';
+import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
+
+const PROTECTED_PATHS = ['/protected'];
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -11,8 +14,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
     }),
+    GitHub({
+      // 最小限のスコープ: メールアドレスのみ
+      authorization: {
+        params: {
+          scope: 'user:email',
+        },
+      },
+    }),
   ],
+  pages: {
+    signIn: '/auth/signin',
+  },
   callbacks: {
+    authorized({ auth: session, request: { nextUrl } }) {
+      // /protected 配下は認証必須
+      const needSignIn = PROTECTED_PATHS.some((path) => nextUrl.pathname.startsWith(path));
+      if (needSignIn && !session) {
+        return false;
+      }
+      return true;
+    },
     jwt({ token }) {
       return token;
     },
