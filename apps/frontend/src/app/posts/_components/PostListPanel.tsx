@@ -45,7 +45,7 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
       const data = await apiClient('PostsController_findAll');
       setPosts(data);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Unknown error');
+      setError(e instanceof Error ? e.message : '不明なエラーが発生しました');
     }
     router.refresh();
   }, [router]);
@@ -70,7 +70,7 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
       setEditPublished(false);
       await refreshPosts();
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Update failed');
+      setError(e instanceof Error ? e.message : '更新に失敗しました');
     }
   };
 
@@ -81,7 +81,7 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
       await apiClient('PostsController_remove', removeParams);
       await refreshPosts();
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Delete failed');
+      setError(e instanceof Error ? e.message : '削除に失敗しました');
     }
   };
 
@@ -107,7 +107,7 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
       <Divider my="lg" />
 
       <Title order={2} size="h5" mb="sm">
-        All Posts
+        投稿一覧
       </Title>
 
       {posts.length === 0 ? (
@@ -119,14 +119,14 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
               {editingId === post.id ? (
                 <Stack gap="xs">
                   <TextInput
-                    placeholder="title"
+                    placeholder="タイトル"
                     value={editTitle}
                     onChange={(e) => {
                       setEditTitle(e.target.value);
                     }}
                   />
                   <TextInput
-                    placeholder="content"
+                    placeholder="本文"
                     value={editContent}
                     onChange={(e) => {
                       setEditContent(e.target.value);
@@ -135,7 +135,7 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
                   <Group>
                     <Checkbox
                       id={`published-${String(post.id)}`}
-                      label="Published"
+                      label="公開"
                       checked={editPublished}
                       onChange={(e) => {
                         setEditPublished(e.target.checked);
@@ -167,7 +167,7 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
                         {post.published ? '公開' : '下書き'}
                       </Badge>
                       {post.authorId !== null && (
-                        <Text size="sm">Author ID: {String(post.authorId)}</Text>
+                        <Text size="sm">著者ID: {String(post.authorId)}</Text>
                       )}
                     </Group>
                   </Stack>
@@ -179,7 +179,7 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
                         startEditing(post);
                       }}
                     >
-                      Edit
+                      編集
                     </Button>
                     <Button
                       size="sm"
@@ -188,7 +188,7 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
                         void handleDelete(post.id);
                       }}
                     >
-                      DELETE
+                      削除
                     </Button>
                   </Group>
                 </Group>
@@ -200,7 +200,7 @@ export function PostListPanel({ initialPosts }: PostListPanelProps): ReactNode {
 
       <Box mt={24}>
         <Button variant="default" onClick={() => void refreshPosts()}>
-          Refresh
+          更新
         </Button>
       </Box>
     </>

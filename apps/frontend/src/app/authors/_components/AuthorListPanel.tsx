@@ -41,7 +41,7 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
       const data = await apiClient('AuthorsController_findAll');
       setAuthors(data);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Unknown error');
+      setError(e instanceof Error ? e.message : '不明なエラーが発生しました');
     }
     router.refresh();
   }, [router]);
@@ -59,7 +59,7 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
       setEditName('');
       await refreshAuthors();
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Update failed');
+      setError(e instanceof Error ? e.message : '更新に失敗しました');
     }
   };
 
@@ -70,7 +70,7 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
       await apiClient('AuthorsController_remove', removeParams);
       await refreshAuthors();
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Delete failed');
+      setError(e instanceof Error ? e.message : '削除に失敗しました');
     }
   };
 
@@ -94,7 +94,7 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
       <Divider my="lg" />
 
       <Title order={2} size="h5" mb="sm">
-        All Authors
+        著者一覧
       </Title>
 
       {authors.length === 0 ? (
@@ -119,7 +119,7 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
                         void handleUpdate(author.id);
                       }}
                     >
-                      PATCH
+                      更新
                     </Button>
                     <Button
                       size="sm"
@@ -128,7 +128,7 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
                         setEditingId(null);
                       }}
                     >
-                      Cancel
+                      キャンセル
                     </Button>
                   </Group>
                 </Stack>
@@ -145,10 +145,10 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
                         startEditing(author);
                       }}
                     >
-                      Edit
+                      編集
                     </Button>
                     <Button size="sm" color="red" onClick={() => void handleDelete(author.id)}>
-                      DELETE
+                      削除
                     </Button>
                   </Group>
                 </Group>
@@ -160,7 +160,7 @@ export function AuthorListPanel({ initialAuthors }: AuthorListPanelProps): React
 
       <Box mt={24}>
         <Button variant="default" onClick={() => void refreshAuthors()}>
-          Refresh
+          更新
         </Button>
       </Box>
     </>

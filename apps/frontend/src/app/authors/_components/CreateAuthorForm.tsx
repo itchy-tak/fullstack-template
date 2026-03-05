@@ -22,18 +22,18 @@ export function CreateAuthorForm({ onCreated, onError }: CreateAuthorFormProps):
       setName('');
       onCreated();
     } catch (e) {
-      onError(e instanceof Error ? e.message : 'Create failed');
+      onError(e instanceof Error ? e.message : '作成に失敗しました');
     }
   };
 
   return (
     <Card withBorder mb="lg">
       <CardSection withBorder inheritPadding py="xs" mb="sm">
-        <strong>Create Author</strong>
+        <strong>著者を作成</strong>
       </CardSection>
       <Group>
         <TextInput
-          placeholder="name (optional)"
+          placeholder="名前（任意）"
           value={name}
           onChange={(e) => {
             setName(e.target.value);
@@ -41,7 +41,7 @@ export function CreateAuthorForm({ onCreated, onError }: CreateAuthorFormProps):
           style={{ flex: 1 }}
         />
         <Button onClick={() => void handleCreate()} style={{ flexShrink: 0 }}>
-          POST
+          作成
         </Button>
       </Group>
     </Card>

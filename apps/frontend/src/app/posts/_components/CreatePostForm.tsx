@@ -36,19 +36,19 @@ export function CreatePostForm({ onCreated, onError }: CreatePostFormProps): Rea
       setPublished(false);
       onCreated();
     } catch (e) {
-      onError(e instanceof Error ? e.message : 'Create failed');
+      onError(e instanceof Error ? e.message : '作成に失敗しました');
     }
   };
 
   return (
     <Card withBorder mb="lg">
       <CardSection withBorder inheritPadding py="xs" mb="sm">
-        <strong>Create Post</strong>
+        <strong>投稿を作成</strong>
       </CardSection>
       <Stack gap="sm">
         <Group>
           <TextInput
-            placeholder="title (required)"
+            placeholder="タイトル（必須）"
             value={title}
             onChange={(e) => {
               setTitle(e.target.value);
@@ -56,7 +56,7 @@ export function CreatePostForm({ onCreated, onError }: CreatePostFormProps): Rea
             style={{ flex: 1 }}
           />
           <TextInput
-            placeholder="authorId (optional)"
+            placeholder="著者ID（任意）"
             value={authorId}
             onChange={(e) => {
               setAuthorId(e.target.value);
@@ -65,7 +65,7 @@ export function CreatePostForm({ onCreated, onError }: CreatePostFormProps): Rea
           />
         </Group>
         <TextInput
-          placeholder="content (optional)"
+          placeholder="本文（任意）"
           value={content}
           onChange={(e) => {
             setContent(e.target.value);
@@ -74,14 +74,14 @@ export function CreatePostForm({ onCreated, onError }: CreatePostFormProps): Rea
         <Group>
           <Checkbox
             id="create-post-published"
-            label="Published"
+            label="公開"
             checked={published}
             onChange={(e) => {
               setPublished(e.target.checked);
             }}
           />
           <Button onClick={() => void handleCreate()} style={{ flexShrink: 0 }}>
-            POST
+            作成
           </Button>
         </Group>
       </Stack>

@@ -26,14 +26,14 @@ export function SearchAuthorForm(): ReactNode {
       const data = await apiClient('AuthorsController_findOne', params);
       setFoundAuthor(data);
     } catch (e) {
-      setSearchError(e instanceof Error ? e.message : 'Not found');
+      setSearchError(e instanceof Error ? e.message : '著者が見つかりませんでした');
     }
   };
 
   return (
     <Card withBorder mb="lg">
       <CardSection withBorder inheritPadding py="xs" mb="sm">
-        <strong>Get Author by ID</strong>
+        <strong>IDで著者を検索</strong>
       </CardSection>
       <Group mb="xs">
         <TextInput
@@ -44,7 +44,7 @@ export function SearchAuthorForm(): ReactNode {
           }}
           style={{ width: 120 }}
         />
-        <Button onClick={() => void handleSearch()}>GET</Button>
+        <Button onClick={() => void handleSearch()}>検索</Button>
       </Group>
       {searchError !== null && (
         <Text c="red" size="sm">

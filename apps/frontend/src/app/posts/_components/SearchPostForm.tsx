@@ -36,14 +36,14 @@ export function SearchPostForm(): ReactNode {
       const data = await apiClient('PostsController_findOne', params);
       setFoundPost(data);
     } catch (e) {
-      setSearchError(e instanceof Error ? e.message : 'Not found');
+      setSearchError(e instanceof Error ? e.message : '投稿が見つかりませんでした');
     }
   };
 
   return (
     <Card withBorder mb="lg">
       <CardSection withBorder inheritPadding py="xs" mb="sm">
-        <strong>Get Post by ID</strong>
+        <strong>IDで投稿を検索</strong>
       </CardSection>
       <Group mb="xs">
         <TextInput
@@ -54,7 +54,7 @@ export function SearchPostForm(): ReactNode {
           }}
           style={{ width: 120 }}
         />
-        <Button onClick={() => void handleSearch()}>GET</Button>
+        <Button onClick={() => void handleSearch()}>検索</Button>
       </Group>
       {searchError !== null && (
         <Text c="red" size="sm">
@@ -77,7 +77,7 @@ export function SearchPostForm(): ReactNode {
                 {foundPost.published ? '公開' : '下書き'}
               </Badge>
               {foundPost.authorId !== null && (
-                <Text size="sm">Author ID: {String(foundPost.authorId)}</Text>
+                <Text size="sm">著者ID: {String(foundPost.authorId)}</Text>
               )}
             </Group>
           </Stack>
