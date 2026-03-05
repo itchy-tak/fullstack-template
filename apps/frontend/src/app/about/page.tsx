@@ -1,11 +1,17 @@
 import { Card, Container, Divider, List, ListItem, Text, Title } from '@mantine/core';
+import { Metadata } from 'next';
 import { ReactNode } from 'react';
+
+import { BackButton } from '@/components/BackButton';
+
+export const metadata: Metadata = { title: 'テンプレートについて' };
 
 export default function AboutPage(): ReactNode {
   return (
     <Container size="sm" py="xl">
+      <BackButton />
       <Title order={1} mb="lg">
-        About this Template
+        このプロジェクトについて
       </Title>
 
       <Text mb="lg">
@@ -19,16 +25,16 @@ export default function AboutPage(): ReactNode {
         </Title>
         <List>
           <ListItem>
-            <strong>Frontend:</strong> Next.js 16 / React 19 / Mantine v7
+            <strong>フロントエンド:</strong> Next.js 16 / React 19 / Mantine v7
           </ListItem>
           <ListItem>
-            <strong>Monorepo:</strong> Turborepo / pnpm workspaces
+            <strong>モノレポ:</strong> Turborepo / pnpm workspaces
           </ListItem>
           <ListItem>
-            <strong>Linting:</strong> ESLint 9 (flat config) / Prettier
+            <strong>リンティング:</strong> ESLint 9 (flat config) / Prettier
           </ListItem>
           <ListItem>
-            <strong>Language:</strong> TypeScript 5.9
+            <strong>言語:</strong> TypeScript 5.9
           </ListItem>
         </List>
       </Card>
