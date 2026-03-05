@@ -12,8 +12,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      // NestJS  + Vercel での パスエイリアス解決がうまくいかないため指定しない
-      // "@/*": ["./src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src/**/*.ts"],

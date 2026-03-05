@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "nest start --watch",
-    "build": "nest build",
+    "build": "nest build && tsc-alias -p tsconfig.build.json",
     "build:prod": "pnpm prisma:generate && prisma migrate deploy && pnpm build",
     "start": "nest start",
     "lint": "eslint src/",
@@ -56,6 +56,7 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0"
   },
   "jest": {
