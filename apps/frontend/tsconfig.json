@@ -1,20 +1,21 @@
 {
   "extends": "@takuya-ichikawa/typescript-config/base",
   "compilerOptions": {
-    "module": "esnext",
     "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "noEmit": true,
+    "module": "esnext",
     "moduleResolution": "bundler",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "plugins": [
       {
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "lib": ["dom", "dom.iterable", "esnext"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", "dist"]
