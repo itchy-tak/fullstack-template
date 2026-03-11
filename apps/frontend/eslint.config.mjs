@@ -1,10 +1,12 @@
 import baseConfig from '@takuya-ichikawa/eslint-config-base';
-import nextConfig from 'eslint-config-next/core-web-vitals';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
 
 const config = [
   { ignores: ['.next/'] },
   ...baseConfig,
-  ...nextConfig,
+  ...nextVitals,
+  ...nextTs,
   {
     languageOptions: {
       parserOptions: {
