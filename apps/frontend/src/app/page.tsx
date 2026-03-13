@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 
 export default function Home(): ReactNode {
   return (
-    <Container size="sm" py="xl">
+    <Container size="sm">
       <Title order={1} ta="center" mb="md">
         Frontend Template
       </Title>

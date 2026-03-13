@@ -1,11 +1,13 @@
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
+
+import { AppShellLayout } from '@/components/AppShell';
 
 export const metadata: Metadata = {
   title: {
@@ -14,12 +16,10 @@ export const metadata: Metadata = {
   },
 };
 
-import { GlobalHeader } from '@/components/GlobalHeader';
-
 export default function RootLayout(props: { children: ReactNode }): ReactNode {
   const { children } = props;
   return (
-    <html lang="ja" suppressHydrationWarning>
+    <html lang="ja" {...mantineHtmlProps}>
       <head>
         <ColorSchemeScript />
       </head>
@@ -27,8 +27,7 @@ export default function RootLayout(props: { children: ReactNode }): ReactNode {
         <SessionProvider>
           <MantineProvider>
             <Notifications position="bottom-right" />
-            <GlobalHeader />
-            <main>{children}</main>
+            <AppShellLayout>{children}</AppShellLayout>
           </MantineProvider>
         </SessionProvider>
       </body>
