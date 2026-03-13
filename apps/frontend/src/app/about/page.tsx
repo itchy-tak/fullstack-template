@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: 'テンプレートについて' };
 
 export default function AboutPage(): ReactNode {
   return (
-    <Container size="sm" py="xl">
+    <Container size="sm">
       <BackButton />
       <Title order={1} mb="lg">
         このプロジェクトについて

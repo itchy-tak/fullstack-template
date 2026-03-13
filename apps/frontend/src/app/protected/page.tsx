@@ -12,7 +12,7 @@ export const metadata: Metadata = { title: '認証必須ページ' };
  */
 export default function ProtectedPage(): ReactNode {
   return (
-    <Container size="sm" py="xl">
+    <Container size="sm">
       <BackButton />
       <Title order={1} mb="md">
         認証必須ページ

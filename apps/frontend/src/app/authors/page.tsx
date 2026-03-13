@@ -28,7 +28,7 @@ export default async function AuthorsPage(): Promise<ReactNode> {
   }
 
   return (
-    <Container size="sm" py="xl">
+    <Container size="sm">
       <BackButton />
       <Title order={1} mb={4}>
         著者
