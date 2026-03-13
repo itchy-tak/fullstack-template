@@ -1,13 +1,17 @@
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
-import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
+import { ColorSchemeScript, createTheme, mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
 
 import { AppShellLayout } from '@/components/AppShell';
+
+const theme = createTheme({
+  white: '#fcfcfc',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -21,11 +25,11 @@ export default function RootLayout(props: { children: ReactNode }): ReactNode {
   return (
     <html lang="ja" {...mantineHtmlProps}>
       <head>
-        <ColorSchemeScript />
+        <ColorSchemeScript defaultColorScheme="dark" />
       </head>
       <body>
         <SessionProvider>
-          <MantineProvider>
+          <MantineProvider defaultColorScheme="dark" theme={theme}>
             <Notifications position="bottom-right" />
             <AppShellLayout>{children}</AppShellLayout>
           </MantineProvider>
