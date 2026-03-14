@@ -16,11 +16,9 @@
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "eamodio.gitlens",
-        "Gruntfuggly.todo-tree",
         "Postman.postman-for-vscode",
         "yoavbls.pretty-ts-errors",
-        "rodrigovallades.es7-react-js-snippets",
-        "formulahendry.auto-rename-tag"
+        "rodrigovallades.es7-react-js-snippets"
       ],
       "search.exclude": {
         ".pnpm-store": true,
@@ -37,6 +35,11 @@
           "source.fixAll.eslint": "always",
           "source.addMissingImports.ts": "always"
         },
+        "editor.linkedEditing": true,
+        // --- Language-specific formatters ---
+        "[prisma]": {
+          "editor.defaultFormatter": "Prisma.prisma"
+        },
         // --- Files ---
         "files.eol": "\n",
         // --- ESLint (monorepo: resolve config per package) ---
@@ -45,7 +48,22 @@
         // allow Tailwind/custom at-rules in CSS
         "css.lint.unknownAtRules": "ignore",
         // --- TypeScript (use workspace TypeScript instead of VS Code built-in) ---
-        "typescript.tsdk": "node_modules/typescript/lib"
+        "js/ts.tsdk.path": "node_modules/typescript/lib",
+        // --- Prisma ---
+        "prisma.pinToPrisma6": true,
+        // --- SQLTools ---
+        "sqltools.connections": [
+          {
+            "previewLimit": 50,
+            "server": "db",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "fullstack-template-connection",
+            "database": "postgres",
+            "username": "postgres",
+            "password": "postgres"
+          }
+        ]
       }
     }
   },
