@@ -1,13 +1,21 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { ApiOkResponse } from '@nestjs/swagger';
 
-import { AppService } from './app.service';
+import { HealthResponseDto, ProtectedResponseDto } from './app.dto';
+import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @Get('health')
-  getHealth(): { status: string } {
-    return this.appService.getHealth();
+  @ApiOkResponse({ type: HealthResponseDto })
+  getHealth(): HealthResponseDto {
+    return { status: 'ok' };
+  }
+
+  @Get('protected')
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: ProtectedResponseDto })
+  getProtected(): ProtectedResponseDto {
+    return { message: '認証済み' };
   }
 }

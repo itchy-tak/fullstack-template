@@ -32,10 +32,37 @@ import type {
   paths,
 } from 'api-types';
 import { OPERATION_MAP } from 'api-types';
+import { SignJWT } from 'jose';
 import { unstable_noStore as noStore } from 'next/cache';
 import createClient from 'openapi-fetch';
 
+import { auth } from '@/auth';
+
 const BACKEND_URL = process.env.BACKEND_URL ?? 'http://localhost:5000';
+const INTERNAL_SECRET = process.env.INTERNAL_SECRET ?? '';
+const AUTH_SECRET = process.env.AUTH_SECRET ?? '';
+
+// ---------------------------------------------------------------------------
+// セキュリティヘッダー生成
+// ---------------------------------------------------------------------------
+
+/**
+ * NextAuth のセッション情報を使って Bearer トークンを生成する。
+ * セッションがない場合は undefined を返す。
+ */
+async function buildAuthorizationHeader(): Promise<string | undefined> {
+  const session = await auth();
+  if (!session?.user?.email) {
+    return undefined;
+  }
+  const secret = new TextEncoder().encode(AUTH_SECRET);
+  const token = await new SignJWT({ sub: session.user.email })
+    .setProtectedHeader({ alg: 'HS256' })
+    .setIssuedAt()
+    .setExpirationTime('1m')
+    .sign(secret);
+  return `Bearer ${token}`;
+}
 
 // ---------------------------------------------------------------------------
 // openapi-fetch client (internal)
@@ -81,7 +108,16 @@ export async function apiClient<O extends Operation>(
     delete: client.DELETE,
   }[method];
 
-  const init: Record<string, unknown> = {};
+  // セキュリティヘッダーを付与
+  const headers: Record<string, string> = {
+    'x-internal-secret': INTERNAL_SECRET,
+  };
+  const authorizationHeader = await buildAuthorizationHeader();
+  if (authorizationHeader !== undefined) {
+    headers['authorization'] = authorizationHeader;
+  }
+
+  const init: Record<string, unknown> = { headers };
   if (rawParams !== undefined && 'path' in rawParams) {
     init.params = { path: rawParams.path };
   }

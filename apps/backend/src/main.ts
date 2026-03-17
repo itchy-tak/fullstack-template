@@ -19,6 +19,11 @@ async function bootstrap(): Promise<void> {
 
   const config = app.get(SafeConfigService);
 
+  app.enableCors({
+    origin: config.appConfig.corsOrigin,
+    credentials: true,
+  });
+
   // Swagger UI（開発環境のみ）
   if (config.isDev) {
     const swaggerConfig = createSwaggerConfig();

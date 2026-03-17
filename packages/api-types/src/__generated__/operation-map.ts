@@ -6,6 +6,7 @@
 /** Runtime mapping: Operation name → { path, method } */
 export const OPERATION_MAP = {
   AppController_getHealth: { path: '/health', method: 'get' },
+  AppController_getProtected: { path: '/protected', method: 'get' },
   AuthorsController_create: { path: '/authors', method: 'post' },
   AuthorsController_findAll: { path: '/authors', method: 'get' },
   AuthorsController_findOne: { path: '/authors/{id}', method: 'get' },
