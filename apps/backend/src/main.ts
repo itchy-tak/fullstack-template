@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule } from '@nestjs/swagger';
 
@@ -8,14 +8,7 @@ import { createSwaggerConfig } from './common/swagger/swagger.setup';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
-
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }),
-  );
+  const logger = new Logger('Bootstrap');
 
   const config = app.get(SafeConfigService);
 
@@ -33,9 +26,9 @@ async function bootstrap(): Promise<void> {
 
   await app.listen(config.appConfig.port, '0.0.0.0');
 
-  console.log(`🚀 Application is running on: ${await app.getUrl()}`);
+  logger.log(`🚀 Application is running on: ${await app.getUrl()}`);
   if (config.isDev) {
-    console.log(`📚 Swagger UI: ${await app.getUrl()}/api`);
+    logger.log(`📚 Swagger UI: ${await app.getUrl()}/api`);
   }
 }
 void bootstrap();
