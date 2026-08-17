@@ -10,9 +10,9 @@
   },
   "packageManager": "pnpm@9.0.0",
   "scripts": {
+    "prepare": "husky",
     "init-project": "node scripts/init-project.mjs",
     "create-package": "node scripts/create-package.mjs",
-    "init-husky": "husky",
     "cp:env": "turbo run cp:env",
     "dev": "turbo run dev",
     "build": "turbo run build",
