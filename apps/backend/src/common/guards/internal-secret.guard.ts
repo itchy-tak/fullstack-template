@@ -1,15 +1,28 @@
 import { timingSafeEqual } from 'node:crypto';
 
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import type { Request } from 'express';
 
 import { SafeConfigService } from '../config/safe-config.service';
+import { SKIP_INTERNAL_SECRET_KEY } from './skip-internal-secret.decorator';
 
 @Injectable()
 export class InternalSecretGuard implements CanActivate {
-  constructor(private readonly config: SafeConfigService) {}
+  constructor(
+    private readonly config: SafeConfigService,
+    private readonly reflector: Reflector,
+  ) {}
 
   canActivate(context: ExecutionContext): boolean {
+    const skip = this.reflector.getAllAndOverride<boolean>(SKIP_INTERNAL_SECRET_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+    if (skip) {
+      return true;
+    }
+
     // 検証用
     if (this.config.isInternalSecretDisabled) {
       return true;

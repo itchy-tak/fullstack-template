@@ -3,10 +3,12 @@ import { ApiOkResponse } from '@nestjs/swagger';
 
 import { HealthResponseDto, ProtectedResponseDto } from './app.dto';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
+import { SkipInternalSecret } from './common/guards/skip-internal-secret.decorator';
 
 @Controller()
 export class AppController {
   @Get('health')
+  @SkipInternalSecret()
   @ApiOkResponse({ type: HealthResponseDto })
   getHealth(): HealthResponseDto {
     return { status: 'ok' };
