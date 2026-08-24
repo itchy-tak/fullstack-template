@@ -1,9 +1,11 @@
 'use client';
 
-import { Button, Stack, Text } from '@mantine/core';
+import { Stack, Text } from '@mantine/core';
 import { IconBrandGithub, IconBrandGoogle } from '@tabler/icons-react';
 import { signIn } from 'next-auth/react';
 import { ReactNode } from 'react';
+
+import { GatedButton } from '@/components/health/gated-button';
 
 type Props = {
   callbackUrl?: string;
@@ -21,7 +23,7 @@ export function SignInContent({ callbackUrl, onSignInAction }: Props): ReactNode
       <Text size="sm" c="dimmed">
         認証プロバイダーを選択してください
       </Text>
-      <Button
+      <GatedButton
         leftSection={<IconBrandGoogle size={18} />}
         variant="default"
         onClick={() => {
@@ -29,8 +31,8 @@ export function SignInContent({ callbackUrl, onSignInAction }: Props): ReactNode
         }}
       >
         Google でサインイン
-      </Button>
-      <Button
+      </GatedButton>
+      <GatedButton
         leftSection={<IconBrandGithub size={18} />}
         variant="default"
         onClick={() => {
@@ -38,7 +40,7 @@ export function SignInContent({ callbackUrl, onSignInAction }: Props): ReactNode
         }}
       >
         GitHub でサインイン
-      </Button>
+      </GatedButton>
     </Stack>
   );
 }

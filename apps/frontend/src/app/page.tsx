@@ -2,6 +2,8 @@ import { Badge, Card, Container, Divider, List, ListItem, Text, Title } from '@m
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
+import { GatedLink } from '@/components/health/gated-link';
+
 export default function Home(): ReactNode {
   return (
     <Container size="sm">
@@ -21,16 +23,17 @@ export default function Home(): ReactNode {
         </Text>
         <List>
           <ListItem>
-            <Link href="/authors">/authors</Link> — 著者 CRUD（一覧・作成・更新・削除・ID 検索）
+            <GatedLink href="/authors">/authors</GatedLink> — 著者 CRUD(一覧・作成・更新・削除・ID
+            検索)
           </ListItem>
           <ListItem>
-            <Link href="/posts">/posts</Link> — 投稿 CRUD（一覧・作成・更新・削除・ID 検索）
+            <GatedLink href="/posts">/posts</GatedLink> — 投稿 CRUD(一覧・作成・更新・削除・ID 検索)
           </ListItem>
           <ListItem>
-            <Link href="/about">/about</Link> — テンプレート情報（SSG：静的生成ページ）
+            <Link href="/about">/about</Link> — テンプレート情報(SSG:静的生成ページ)
           </ListItem>
           <ListItem>
-            <Link href="/protected">/protected</Link> — 認証必須ページ（テンプレート）
+            <GatedLink href="/protected">/protected</GatedLink> — 認証必須ページ(テンプレート)
           </ListItem>
         </List>
       </Card>

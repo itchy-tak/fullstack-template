@@ -8,6 +8,7 @@ import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
 
 import { AppShellLayout } from '@/components/AppShell';
+import { HealthCheckProvider } from '@/components/health/health-check-provider';
 
 const theme = createTheme({
   white: '#fcfcfc',
@@ -31,7 +32,9 @@ export default function RootLayout(props: { children: ReactNode }): ReactNode {
         <SessionProvider>
           <MantineProvider defaultColorScheme="dark" theme={theme}>
             <Notifications position="bottom-right" />
-            <AppShellLayout>{children}</AppShellLayout>
+            <HealthCheckProvider>
+              <AppShellLayout>{children}</AppShellLayout>
+            </HealthCheckProvider>
           </MantineProvider>
         </SessionProvider>
       </body>
